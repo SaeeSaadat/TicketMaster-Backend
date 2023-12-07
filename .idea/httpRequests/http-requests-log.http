@@ -1,0 +1,555 @@
+POST http://localhost:8000/api/auth/register
+Content-Type: application/json
+Content-Length: 46
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Cookie: SESSION=M2VhNWFiMTgtYzc4Ny00M2MyLWIwMTktNzFlMjRmNjUwYjEz
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "username": "test",
+  "password": "test"
+}
+
+###
+
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+Content-Length: 54
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "username": "mohammad",
+  "password": "mohammad"
+}
+
+<> 2023-12-07T182214.200.json
+
+###
+
+GET http://localhost:8000/api/auth/user
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-12-07T181027.200.json
+
+###
+
+POST http://localhost:8000/api/auth/logout
+Content-Length: 0
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Cookie: SESSION=MTM2YWFlNzEtYWUwZS00MDNhLTg3YzMtYWVlYTFiMDkzYTU0
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+###
+
+GET http://localhost:8000/api/auth/user
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Cookie: SESSION=MTM2YWFlNzEtYWUwZS00MDNhLTg3YzMtYWVlYTFiMDkzYTU0
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-12-07T181024.200.json
+
+###
+
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+Content-Length: 54
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Cookie: SESSION=NTBjOGNhY2YtNDBlOS00MjU3LTg0OWItMzljYWY2MGMwODMw
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "username": "mohammad",
+  "password": "mohammad"
+}
+
+<> 2023-12-07T181023.200.json
+
+###
+
+GET http://localhost:8000/api/auth/user
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Cookie: SESSION=NTBjOGNhY2YtNDBlOS00MjU3LTg0OWItMzljYWY2MGMwODMw
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+###
+
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+Content-Length: 54
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Cookie: SESSION=ODQzMGNiZTYtNDhhNi00ZWZiLWFhMDAtYjI5Y2FlMzU3YTg4
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "username": "mohammad",
+  "password": "mohammad"
+}
+
+<> 2023-12-07T180456.200.json
+
+###
+
+GET http://localhost:8000/api/auth/user
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Cookie: SESSION=ODQzMGNiZTYtNDhhNi00ZWZiLWFhMDAtYjI5Y2FlMzU3YTg4
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+###
+
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+Content-Length: 54
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Cookie: SESSION=ODc5YWU2YjMtMWI0MC00NjQ5LThhMTAtYWNiZGMyMmUwODg5
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "username": "mohammad",
+  "password": "mohammad"
+}
+
+<> 2023-12-07T180448.200.json
+
+###
+
+GET http://localhost:8000/api/auth/user
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Cookie: SESSION=ODc5YWU2YjMtMWI0MC00NjQ5LThhMTAtYWNiZGMyMmUwODg5
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-12-07T174136.200.json
+
+###
+
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+Content-Length: 54
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Cookie: SESSION=YjU4MGE4MTgtZTkwNC00YjE3LWE2NjQtMmMzZDcyMjM2OGZm
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "username": "mohammad",
+  "password": "mohammad"
+}
+
+<> 2023-12-07T174103.200.json
+
+###
+
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+Content-Length: 54
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "username": "mohammad",
+  "password": "mohammad"
+}
+
+<> 2023-12-07T173822.200.json
+
+###
+
+POST http://localhost:8000/api/auth/register
+Content-Type: application/json
+Content-Length: 54
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "username": "mohammad",
+  "password": "mohammad"
+}
+
+<> 2023-12-07T173716.409.txt
+
+###
+
+GET http://localhost:8000/api/auth/user
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-12-07T173412.200.json
+
+###
+
+POST http://localhost:8000/api/auth/logout
+Content-Length: 0
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Cookie: SESSION=ZjU5MjY0OTQtNTM4NC00ZmNmLThkZWQtODkxZDI1Y2ZlZDUy
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+###
+
+GET http://localhost:8000/api/auth/user
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Cookie: SESSION=ZjU5MjY0OTQtNTM4NC00ZmNmLThkZWQtODkxZDI1Y2ZlZDUy
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-12-07T173407.200.json
+
+###
+
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+Content-Length: 54
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "username": "mohammad",
+  "password": "mohammad"
+}
+
+<> 2023-12-07T173406.200.json
+
+###
+
+GET http://localhost:8000/api/auth/user
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-12-07T173402.200.json
+
+###
+
+POST http://localhost:8000/api/auth/logout
+Content-Length: 0
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Cookie: SESSION=MmRlMDY0YjMtYzIyYy00OGNkLWFjMTEtYmFiMjJkYjkzNmUw
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+###
+
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+Content-Length: 54
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "username": "mohammad",
+  "password": "mohammad"
+}
+
+<> 2023-12-07T171253.200.json
+
+###
+
+POST http://localhost:8000/api/auth/register
+Content-Type: application/json
+Content-Length: 54
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "username": "mohammad",
+  "password": "mohammad"
+}
+
+###
+
+POST http://localhost:8000/api/auth/logout
+Content-Length: 0
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Cookie: SESSION=OGMzYjRiYmMtZDIyZi00MWY5LTkxYTQtZGVmOWQ0YmYwNmNk
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+###
+
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+Content-Length: 48
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "username": "admin",
+  "password": "admin"
+}
+
+<> 2023-12-07T164618.200.json
+
+###
+
+POST http://localhost:8000/api/auth/logout
+Content-Length: 0
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Cookie: SESSION=NzFlMzdhZmYtMGNiNS00ZGJiLWI5MzQtMzk3ZGIwMDdlYzUy
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+###
+
+POST http://localhost:8000/api/auth/login
+Content-Length: 0
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Cookie: SESSION=NzFlMzdhZmYtMGNiNS00ZGJiLWI5MzQtMzk3ZGIwMDdlYzUy
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+###
+
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+Content-Length: 48
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Cookie: SESSION=OWJkOGU5NmUtM2M5Ny00NTdkLTk0MjUtODliNGM3NmMyMWI4
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "username": "admin",
+  "password": "admin"
+}
+
+<> 2023-12-07T161716.200.json
+
+###
+
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+Content-Length: 48
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Cookie: SESSION=OTQ4NTExZTktMmE5OS00YWE1LTg4ZDUtNjVhOThkYjI4NzBm
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "username": "admin",
+  "password": "admin"
+}
+
+<> 2023-12-07T155716.200.json
+
+###
+
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+Content-Length: 48
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Cookie: SESSION=MmNjMmVlZWQtOTVmZi00YTM3LTkyMTktYThkNjYwNWUzZDNi
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "username": "admin",
+  "password": "admin"
+}
+
+<> 2023-12-07T155619.200.json
+
+###
+
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+Content-Length: 48
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Cookie: SESSION=ZjVmNTA5MTAtYTQ2My00ZTcyLTlhM2ItMTA4MmQ2NzJkZjgx
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "username": "admin",
+  "password": "admin"
+}
+
+###
+
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+Content-Length: 48
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "username": "admin",
+  "password": "admin"
+}
+
+###
+
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+Content-Length: 52
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "username": "admin",
+  "password": "adminPass"
+}
+
+<> 2023-12-07T153753.401.txt
+
+###
+
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+Content-Length: 52
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "username": "admin",
+  "password": "adminPass"
+}
+
+<> 2023-12-07T153613.401.txt
+
+###
+
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+Content-Length: 52
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Cookie: SESSION=YTEzNzA0NTctZWYzMi00NDVkLWI3OTMtMDk0MTJiYzhhODA0
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "username": "admin",
+  "password": "adminPass"
+}
+
+<> 2023-12-07T153538.401.txt
+
+###
+
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+Content-Length: 52
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Cookie: SESSION=YTEzNzA0NTctZWYzMi00NDVkLWI3OTMtMDk0MTJiYzhhODA0
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "username": "admin",
+  "password": "adminPass"
+}
+
+<> 2023-12-07T153344.403.json
+
+###
+
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+Content-Length: 52
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Cookie: SESSION=YTEzNzA0NTctZWYzMi00NDVkLWI3OTMtMDk0MTJiYzhhODA0
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "username": "admin",
+  "password": "adminPass"
+}
+
+###
+
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+Content-Length: 52
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Cookie: SESSION=YTEzNzA0NTctZWYzMi00NDVkLWI3OTMtMDk0MTJiYzhhODA0
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "username": "admin",
+  "password": "adminPass"
+}
+
+###
+
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+Content-Length: 52
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Cookie: SESSION=YTEzNzA0NTctZWYzMi00NDVkLWI3OTMtMDk0MTJiYzhhODA0
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "username": "admin",
+  "password": "adminPass"
+}
+
+###
+
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+Content-Length: 48
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Cookie: SESSION=YTEzNzA0NTctZWYzMi00NDVkLWI3OTMtMDk0MTJiYzhhODA0
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "username": "admin",
+  "password": "admin"
+}
+
+###
+
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+Content-Length: 48
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Cookie: SESSION=YTEzNzA0NTctZWYzMi00NDVkLWI3OTMtMDk0MTJiYzhhODA0
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "username": "admin",
+  "password": "admin"
+}
+
+###
+
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+Content-Length: 48
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "username": "admin",
+  "password": "admin"
+}
+
+###
+
