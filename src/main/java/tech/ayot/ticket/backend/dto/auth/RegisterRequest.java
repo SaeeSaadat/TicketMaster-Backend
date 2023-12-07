@@ -1,5 +1,11 @@
 package tech.ayot.ticket.backend.dto.auth;
 
+/**
+ * Request body of register request.
+ *
+ * @see tech.ayot.ticket.backend.service.auth.AuthenticationService AuthenticationService
+ * @see tech.ayot.ticket.backend.model.user.User User
+ */
 public class RegisterRequest {
 
     private String username;

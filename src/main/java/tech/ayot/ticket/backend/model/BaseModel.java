@@ -10,31 +10,55 @@ import tech.ayot.ticket.backend.model.user.User;
 
 import java.util.Date;
 
+/**
+ * Represents base model for entities
+ */
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class BaseModel {
 
+    /**
+     * The entity's id
+     */
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
 
+    /**
+     * The entity's version
+     * <p>
+     * This value is used to ensure integrity when updating the entity
+     * </p>
+     */
     @Version
     @Column(nullable = false)
-    protected Integer crc;
+    protected Integer version;
 
+    /**
+     * The user who created the entity
+     */
     @CreatedBy
     @ManyToOne
     protected User createdBy;
 
+    /**
+     * The creation date of the entity
+     */
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
     protected Date creationDate;
 
+    /**
+     * The user who last updated the entity
+     */
     @LastModifiedBy
     @ManyToOne
     protected User lastModifiedBy;
 
+    /**
+     * The date of the last update to the entity
+     */
     @LastModifiedDate
     @Temporal(TemporalType.TIMESTAMP)
     protected Date lastModifiedDate;
@@ -48,12 +72,12 @@ public class BaseModel {
         this.id = id;
     }
 
-    public Integer getCrc() {
-        return crc;
+    public Integer getVersion() {
+        return version;
     }
 
-    public void setCrc(Integer crc) {
-        this.crc = crc;
+    public void setVersion(Integer crc) {
+        this.version = crc;
     }
 
     public User getCreatedBy() {

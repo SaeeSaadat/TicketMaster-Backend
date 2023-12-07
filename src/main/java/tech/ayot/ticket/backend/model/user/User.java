@@ -1,31 +1,38 @@
 package tech.ayot.ticket.backend.model.user;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import org.springframework.security.core.userdetails.UserDetails;
-import tech.ayot.ticket.backend.dto.auth.UserDetailsDto;
+import jakarta.persistence.*;
+import org.hibernate.envers.AuditMappedBy;
 import tech.ayot.ticket.backend.model.BaseModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Represents an entity for a user
+ */
 @Entity
 @Table(name = "users")
 public class User extends BaseModel {
 
+    /**
+     * The user's username
+     */
     @Column(unique = true, nullable = false)
-    protected String username;
+    private String username;
 
+    /**
+     * The user's encoded password
+     */
     @Column(nullable = false)
-    protected String password;
+    private String password;
 
-
-    public UserDetails toUserDetails() {
-        return new UserDetailsDto(
-            this.id,
-            this.username,
-            this.password,
-            this.lastModifiedDate
-        );
-    }
+    /**
+     * Represents relationship between the user and products
+     */
+    @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @AuditMappedBy(mappedBy = "user")
+    @JoinColumn(name = "user_id")
+    List<UserProduct> userProducts = new ArrayList<>();
 
 
     public String getUsername() {
@@ -42,5 +49,13 @@ public class User extends BaseModel {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<UserProduct> getUserProducts() {
+        return userProducts;
+    }
+
+    public void setUserProducts(List<UserProduct> userProducts) {
+        this.userProducts = userProducts;
     }
 }

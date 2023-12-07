@@ -12,21 +12,19 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.session.Session;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import tech.ayot.ticket.backend.dto.auth.LoginRequest;
 import tech.ayot.ticket.backend.dto.auth.LoginResponse;
 import tech.ayot.ticket.backend.dto.auth.RegisterRequest;
-import tech.ayot.ticket.backend.dto.auth.UserDetailsDto;
+import tech.ayot.ticket.backend.dto.auth.UserDto;
 import tech.ayot.ticket.backend.model.user.User;
 import tech.ayot.ticket.backend.repository.user.UserRepository;
 
 import javax.validation.Valid;
 
 /**
- * Authentication service.
+ * Authentication service
  */
-@Service
 @RestController
 @RequestMapping("/api/auth")
 public class AuthenticationService {
@@ -94,19 +92,19 @@ public class AuthenticationService {
         }
 
         // Get user details
-        UserDetailsDto userDetails = (UserDetailsDto) authentication.getPrincipal();
+        UserDto userDto = (UserDto) authentication.getPrincipal();
 
         // Create session
         sessionService.createSession(
             request,
             authentication,
-            userDetails.getUsername()
+            userDto.getUsername()
         );
 
         // Return login response
         LoginResponse loginResponse = new LoginResponse(
-            userDetails.id(),
-            userDetails.getUsername()
+            userDto.id(),
+            userDto.getUsername()
         );
         return new ResponseEntity<>(loginResponse, HttpStatus.OK);
     }
@@ -153,15 +151,19 @@ public class AuthenticationService {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    /**
+     * Returns current user
+     * @return Current logged-in user, null if user is not logged in
+     */
     @GetMapping(value = {"/user"})
     public ResponseEntity<?> user() {
         // Get current user details
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        boolean isAuthenticated = authentication != null && authentication.getPrincipal() instanceof UserDetailsDto;
-        UserDetailsDto userDetails = isAuthenticated ? (UserDetailsDto) authentication.getPrincipal() : null;
+        boolean isAuthenticated = authentication != null && authentication.getPrincipal() instanceof UserDto;
+        UserDto userDto = isAuthenticated ? (UserDto) authentication.getPrincipal() : null;
 
         // Return login response with null values if user details is null
-        if (userDetails == null) {
+        if (userDto == null) {
             LoginResponse loginResponse = new LoginResponse(
                 null,
                 null
@@ -170,17 +172,17 @@ public class AuthenticationService {
         }
 
         // Update user's current session if user is updated
-        User user = userRepository.findUserByUsername(userDetails.getUsername());
+        User user = userRepository.findUserByUsername(userDto.getUsername());
         if (user.getLastModifiedDate() != null
-            && (userDetails.getModifiedDate() == null
-            || userDetails.getModifiedDate().compareTo(user.getLastModifiedDate()) != 0)) {
-            sessionService.updateCurrentSession(user.toUserDetails());
+            && (userDto.getModifiedDate() == null
+            || userDto.getModifiedDate().compareTo(user.getLastModifiedDate()) != 0)) {
+            sessionService.updateCurrentSession(new UserDto(user));
         }
 
         // Return login response with current user's id and username
         LoginResponse loginResponse = new LoginResponse(
-            userDetails.id(),
-            userDetails.getUsername()
+            userDto.id(),
+            userDto.getUsername()
         );
         return new ResponseEntity<>(loginResponse, HttpStatus.OK);
     }

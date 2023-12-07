@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.session.FindByIndexNameSessionRepository;
@@ -15,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import tech.ayot.ticket.backend.dto.auth.UserDto;
 import tech.ayot.ticket.backend.model.user.User;
 import tech.ayot.ticket.backend.repository.user.UserRepository;
 
@@ -66,7 +66,7 @@ public class SessionService<S extends Session> implements UserDetailsService {
      * Updates all session for the given user
      * @param user The user to update its sessions
      */
-    public void updateAllSessions(UserDetails user) {
+    public void updateAllSessions(UserDto user) {
         Map<String, S> sessionsMap = sessionRepository.findByIndexNameAndIndexValue(
             USERNAME_TOKEN,
             user.getUsername()
@@ -88,7 +88,7 @@ public class SessionService<S extends Session> implements UserDetailsService {
      * Updates current session for the given user
      * @param user The user to update its current session
      */
-    public void updateCurrentSession(UserDetails user) {
+    public void updateCurrentSession(UserDto user) {
         HttpSession session = getCurrentSession();
         SecurityContext securityContext = (SecurityContext) session.getAttribute(SPRING_SECURITY_CONTEXT_TOKEN);
         PreAuthenticatedAuthenticationToken authentication = new PreAuthenticatedAuthenticationToken(
@@ -102,9 +102,9 @@ public class SessionService<S extends Session> implements UserDetailsService {
 
 
     @Override
-    public UserDetails loadUserByUsername(String username) {
+    public UserDto loadUserByUsername(String username) {
         User user = userRepository.findUserByUsername(username.toLowerCase());
-        return user.toUserDetails();
+        return new UserDto(user);
     }
 
 
