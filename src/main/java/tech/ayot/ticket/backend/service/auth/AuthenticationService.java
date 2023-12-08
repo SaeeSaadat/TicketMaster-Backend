@@ -155,7 +155,7 @@ public class AuthenticationService {
      * @return Login response of current logged-in user
      */
     @GetMapping(value = {"/user"})
-    public ResponseEntity<?> user() {
+    public ResponseEntity<?> currentUser() {
         // Get current user DTO
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         boolean isAuthenticated = authentication != null && authentication.getPrincipal() instanceof UserDto;
