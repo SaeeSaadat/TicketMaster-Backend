@@ -11,9 +11,11 @@ import tech.ayot.ticket.backend.model.user.User;
 import tech.ayot.ticket.backend.model.user.UserProduct;
 import tech.ayot.ticket.backend.repository.user.RoleRepository;
 import tech.ayot.ticket.backend.repository.user.UserRepository;
+import tech.ayot.ticket.backend.service.auth.RoleService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * This class is used to initialize application.
@@ -74,13 +76,28 @@ class Initializer implements ApplicationListener<ContextRefreshedEvent> {
     }
 
     private List<Role> createRoles() {
+        // Get roles from RoleService
         List<Role> roles = new ArrayList<>();
-        for (String title : ROLE_TITLES) {
+        String[] roleTitles = RoleService.ROLES;
+        for (String roleTitle : roleTitles) {
             Role role = new Role();
-            role.setTitle(title);
-            roleRepository.save(role);
+            role.setTitle(roleTitle);
             roles.add(role);
         }
+
+        // Get old roles
+        List<Role> oldRoles = roleRepository.findAll();
+
+        // Create new roles
+        roles.stream().filter(role ->
+            !oldRoles.contains(role)
+        ).forEach(roleRepository::save);
+
+        // Delete removed roles
+        oldRoles.stream().filter(role ->
+            !roles.contains(role)
+        ).forEach(roleRepository::delete);
+
         return roles;
     }
 
@@ -98,10 +115,20 @@ class Initializer implements ApplicationListener<ContextRefreshedEvent> {
 
         // Check if admin user is not admin for all products
         boolean isAdminForAllProducts = adminUser.getUserProducts().stream()
-            .anyMatch(userProduct -> userProduct.getProduct() == null);
+            .anyMatch(userProduct ->
+                userProduct.getProduct() == null && userProduct.getRole() != null
+            );
         if (!isAdminForAllProducts) {
+            // Get admin role
+            Optional<Role> optionalAdminRole = roles.stream().filter(
+                role -> role.getTitle().equals(RoleService.ADMIN)
+            ).findFirst();
+            Role adminRole = null;
+            if (optionalAdminRole.isPresent()) {
+                adminRole = optionalAdminRole.get();
+            }
+
             // Set admin user as admin for all products
-            Role adminRole = roles.get(roles.size() - 1);
             List<UserProduct> adminUserProducts = new ArrayList<>();
             UserProduct adminUserProduct = new UserProduct();
             adminUserProduct.setUser(adminUser);

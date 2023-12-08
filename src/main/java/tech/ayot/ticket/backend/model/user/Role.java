@@ -6,6 +6,8 @@ import jakarta.persistence.Table;
 import org.springframework.security.core.GrantedAuthority;
 import tech.ayot.ticket.backend.model.BaseModel;
 
+import java.util.Objects;
+
 /**
  * Represents an entity for a user role
  */
@@ -31,5 +33,19 @@ public class Role extends BaseModel implements GrantedAuthority {
     @Override
     public String getAuthority() {
         return title;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Role role = (Role) o;
+        return Objects.equals(title, role.title);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title);
     }
 }

@@ -2,10 +2,22 @@ package tech.ayot.ticket.backend.dto.auth;
 
 import org.springframework.security.core.GrantedAuthority;
 
+/**
+ * Data Transfer Object for user role
+ */
 public class GrantedRoleDto implements GrantedAuthority {
 
+    /**
+     * The product's ID
+     * <p>
+     *     null means all products
+     * </p>
+     */
     private Integer productId;
 
+    /**
+     * The role's title
+     */
     private String roleTitle;
 
     public GrantedRoleDto(

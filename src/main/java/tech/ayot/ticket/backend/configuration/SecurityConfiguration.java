@@ -15,7 +15,7 @@ import tech.ayot.ticket.backend.service.auth.SessionService;
 
 @Configuration
 @EnableWebSecurity
-class SecurityConfiguration {
+public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(

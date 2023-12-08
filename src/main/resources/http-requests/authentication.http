@@ -3,8 +3,8 @@ POST {{host}}/api/auth/login
 Content-Type: application/json
 
 {
-  "username": "mohammad",
-  "password": "mohammad"
+  "username": "admin",
+  "password": "adminpass"
 }
 
 
@@ -24,3 +24,7 @@ Content-Type: application/json
 
 ### user
 GET {{host}}/api/auth/user
+
+
+### hello
+GET {{host}}/api/auth/product/1/hello

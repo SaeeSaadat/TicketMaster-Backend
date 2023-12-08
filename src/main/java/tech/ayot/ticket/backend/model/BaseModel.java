@@ -28,7 +28,7 @@ public class BaseModel {
     /**
      * The entity's version
      * <p>
-     * This value is used to ensure integrity when updating the entity
+     *     This value is used to ensure integrity when updating the entity
      * </p>
      */
     @Version

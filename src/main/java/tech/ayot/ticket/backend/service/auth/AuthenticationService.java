@@ -103,7 +103,7 @@ public class AuthenticationService {
 
         // Return login response
         LoginResponse loginResponse = new LoginResponse(
-            userDto.id(),
+            userDto.getId(),
             userDto.getUsername()
         );
         return new ResponseEntity<>(loginResponse, HttpStatus.OK);
@@ -152,12 +152,11 @@ public class AuthenticationService {
     }
 
     /**
-     * Returns current user
-     * @return Current logged-in user, null if user is not logged in
+     * @return Login response of current logged-in user
      */
     @GetMapping(value = {"/user"})
     public ResponseEntity<?> user() {
-        // Get current user details
+        // Get current user DTO
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         boolean isAuthenticated = authentication != null && authentication.getPrincipal() instanceof UserDto;
         UserDto userDto = isAuthenticated ? (UserDto) authentication.getPrincipal() : null;
@@ -181,7 +180,7 @@ public class AuthenticationService {
 
         // Return login response with current user's id and username
         LoginResponse loginResponse = new LoginResponse(
-            userDto.id(),
+            userDto.getId(),
             userDto.getUsername()
         );
         return new ResponseEntity<>(loginResponse, HttpStatus.OK);

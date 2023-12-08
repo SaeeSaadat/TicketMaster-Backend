@@ -15,14 +15,29 @@ import java.util.stream.Collectors;
  */
 public class UserDto implements UserDetails {
 
+    /**
+     * The user's ID
+     */
     private final Integer id;
 
+    /**
+     * The user's username
+     */
     private final String username;
 
+    /**
+     * The user's encoded password
+     */
     private final String password;
 
+    /**
+     * The date of the last update to the user
+     */
     private final Date modifiedDate;
 
+    /**
+     * List of user's granted roles
+     */
     private final List<GrantedRoleDto> roles;
 
     public UserDto(User user) {
@@ -44,12 +59,16 @@ public class UserDto implements UserDetails {
     }
 
 
-    public Integer id() {
+    public Integer getId() {
         return id;
     }
 
     public Date getModifiedDate() {
         return modifiedDate;
+    }
+
+    public List<GrantedRoleDto> getRoles() {
+        return roles;
     }
 
 

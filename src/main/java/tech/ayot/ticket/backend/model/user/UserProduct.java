@@ -23,7 +23,7 @@ public class UserProduct extends BaseModel {
     /**
      * The product
      * <p>
-     * Null means all products
+     *     Null means all products
      * </p>
      */
     @ManyToOne
