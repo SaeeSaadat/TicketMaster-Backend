@@ -1,9 +1,7 @@
 package tech.ayot.ticket.backend.model.user;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Index;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import tech.ayot.ticket.backend.dto.auth.Role;
 import tech.ayot.ticket.backend.model.BaseModel;
 import tech.ayot.ticket.backend.model.product.Product;
 
@@ -33,7 +31,8 @@ public class UserProduct extends BaseModel {
     /**
      * The user's role in the product
      */
-    @ManyToOne
+    @Enumerated(EnumType.STRING)
+    @Column(length = 16)
     private Role role;
 
 

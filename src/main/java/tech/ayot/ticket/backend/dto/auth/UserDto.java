@@ -52,7 +52,7 @@ public class UserDto implements UserDetails {
                 }
                 return new GrantedRoleDto(
                     productId,
-                    userProduct.getRole().getTitle()
+                    userProduct.getRole()
                 );
             }
         ).collect(Collectors.toList());

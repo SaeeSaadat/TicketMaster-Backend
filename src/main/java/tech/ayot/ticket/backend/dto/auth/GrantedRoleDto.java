@@ -18,14 +18,14 @@ public class GrantedRoleDto implements GrantedAuthority {
     /**
      * The role's title
      */
-    private String roleTitle;
+    private Role role;
 
     public GrantedRoleDto(
         Integer productId,
-        String roleTitle
+        Role role
     ) {
         this.productId = productId;
-        this.roleTitle = roleTitle;
+        this.role = role;
     }
 
 
@@ -37,21 +37,21 @@ public class GrantedRoleDto implements GrantedAuthority {
         this.productId = productId;
     }
 
-    public String getRoleTitle() {
-        return roleTitle;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoleTitle(String roleTitle) {
-        this.roleTitle = roleTitle;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
 
     @Override
     public String getAuthority() {
         if (productId == null) {
-            return roleTitle;
+            return role.getTitle();
         } else {
-            return productId + "|" + roleTitle;
+            return productId + "|" + role.getTitle();
         }
     }
 }
