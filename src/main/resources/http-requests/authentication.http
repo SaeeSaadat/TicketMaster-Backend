@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
   "username": "admin",
-  "password": "adminpass"
+  "password": "adminpadss"
 }
 
 
@@ -24,7 +24,3 @@ Content-Type: application/json
 
 ### user
 GET {{host}}/api/auth/user
-
-
-### hello
-GET {{host}}/api/auth/product/1/hello

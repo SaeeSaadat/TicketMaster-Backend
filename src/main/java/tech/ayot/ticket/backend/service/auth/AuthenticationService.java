@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.session.Session;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import tech.ayot.ticket.backend.dto.auth.LoginRequest;
 import tech.ayot.ticket.backend.dto.auth.LoginResponse;
 import tech.ayot.ticket.backend.dto.auth.RegisterRequest;
@@ -58,8 +59,8 @@ public class AuthenticationService {
      * @param loginRequest The login request.
      * @return A login response object if the login is successful, or an error object if any error occurs during the login process.
      */
-    @PostMapping(value = {"/login"}, consumes = {"application/json"})
-    public ResponseEntity<?> login(
+    @PostMapping(value = {"/login"},consumes = {"application/json"}, produces = {"application/json"})
+    public ResponseEntity<LoginResponse> login(
         HttpServletRequest request,
         HttpSession session,
         @Valid @RequestBody LoginRequest loginRequest
@@ -68,7 +69,7 @@ public class AuthenticationService {
 
         // Check if username and password exist
         if (loginRequest.getUsername() == null || loginRequest.getPassword() == null) {
-            return new ResponseEntity<>("Invalid username or password", HttpStatus.UNAUTHORIZED);
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid username or password");
         }
 
         // Authenticate user
@@ -82,13 +83,13 @@ public class AuthenticationService {
             // otherwise, present the token to AuthenticationManager for re-authentication
             authentication = authToken.isAuthenticated() ? authToken : authenticationManager.authenticate(authToken);
         } catch (AccountExpiredException ignored) {
-            return new ResponseEntity<>("Account is expired", HttpStatus.UNAUTHORIZED);
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Account is expired");
         } catch (LockedException ignored) {
-            return new ResponseEntity<>("Account is locked", HttpStatus.UNAUTHORIZED);
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Account is locked");
         } catch (DisabledException ignored) {
-            return new ResponseEntity<>("Account is disabled", HttpStatus.UNAUTHORIZED);
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Account is disabled");
         } catch (AuthenticationException ignored) {
-            return new ResponseEntity<>("Invalid username or password", HttpStatus.UNAUTHORIZED);
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid username or password");
         }
 
         // Get user details
@@ -117,7 +118,7 @@ public class AuthenticationService {
      * @return An empty OK if successful
      */
     @PostMapping(value = {"/logout"})
-    public ResponseEntity<?> logout(
+    public ResponseEntity<Void> logout(
         HttpServletRequest request,
         HttpServletResponse response
     ) {
@@ -132,14 +133,14 @@ public class AuthenticationService {
      * @param request The register request
      * @return An empty OK if successful, CONFLICT if username exists
      */
-    @PostMapping(value = {"/register"})
-    public ResponseEntity<?> register(
+    @PostMapping(value = {"/register"}, consumes = {"application/json"})
+    public ResponseEntity<Void> register(
         @Valid @RequestBody RegisterRequest request
     ) {
         // Check if user with the username already exists.
         User user = userRepository.findUserByUsername(request.getUsername());
         if (user != null) {
-            return new ResponseEntity<>("Username already exists", HttpStatus.CONFLICT);
+            throw  new ResponseStatusException(HttpStatus.CONFLICT, "Username already exists");
         }
 
         // Create user
@@ -154,8 +155,8 @@ public class AuthenticationService {
     /**
      * @return Login response of current logged-in user
      */
-    @GetMapping(value = {"/user"})
-    public ResponseEntity<?> currentUser() {
+    @GetMapping(value = {"/user"}, produces = {"application/json"})
+    public ResponseEntity<LoginResponse> currentUser() {
         // Get current user DTO
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         boolean isAuthenticated = authentication != null && authentication.getPrincipal() instanceof UserDto;
