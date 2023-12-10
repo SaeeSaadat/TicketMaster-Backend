@@ -23,7 +23,12 @@ public class SecurityConfiguration {
     ) throws Exception {
         http
             .authorizeHttpRequests((requests) -> requests
+                // Swagger
+                .requestMatchers("/swagger-ui/**").permitAll()
+                .requestMatchers("/v3/api-docs/**").permitAll()
+                // Auth
                 .requestMatchers("/api/auth/**").permitAll()
+                // Other endpoints
                 .requestMatchers("/api/product/**").authenticated()
             )
             .csrf(AbstractHttpConfigurer::disable)

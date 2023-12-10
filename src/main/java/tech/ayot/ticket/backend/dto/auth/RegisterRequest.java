@@ -1,5 +1,7 @@
 package tech.ayot.ticket.backend.dto.auth;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * Request body of register request.
  *
@@ -8,8 +10,10 @@ package tech.ayot.ticket.backend.dto.auth;
  */
 public class RegisterRequest {
 
+    @NotNull
     private String username;
 
+    @NotNull
     private String password;
 
     public RegisterRequest(
