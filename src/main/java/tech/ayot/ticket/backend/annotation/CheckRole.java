@@ -1,12 +1,20 @@
 package tech.ayot.ticket.backend.annotation;
 
+import tech.ayot.ticket.backend.dto.auth.Role;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This annotation is used to check user roles
+ * This annotation is used to check user roles.
+ * <p>
+ *     If you want to use this annotation on an endpoint with {@link CheckRole#role} parameter,
+ *     the endpoint should have
+ *     {@value tech.ayot.ticket.backend.configuration.WebMvcConfiguration#PRODUCT_ID_PATH_VARIABLE_NAME}
+ *     path variable.
+ * </p>
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD})
@@ -15,7 +23,7 @@ public @interface CheckRole {
     /**
      * The role
      */
-    String role() default "";
+    Role role() default Role.GUEST;
 
     /**
      * The root role
@@ -23,5 +31,5 @@ public @interface CheckRole {
      *     root means this user has this role for all products
      * </p>
      */
-    String rootRole() default "";
+    Role rootRole() default Role.GUEST;
 }

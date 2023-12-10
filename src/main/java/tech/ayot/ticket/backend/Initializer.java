@@ -6,16 +6,13 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
-import tech.ayot.ticket.backend.model.user.Role;
+import tech.ayot.ticket.backend.dto.auth.Role;
 import tech.ayot.ticket.backend.model.user.User;
 import tech.ayot.ticket.backend.model.user.UserProduct;
-import tech.ayot.ticket.backend.repository.user.RoleRepository;
 import tech.ayot.ticket.backend.repository.user.UserRepository;
-import tech.ayot.ticket.backend.service.auth.RoleService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * This class is used to initialize application.
@@ -36,29 +33,17 @@ class Initializer implements ApplicationListener<ContextRefreshedEvent> {
      */
     private static final String ADMIN_PASSWORD = "$2a$10$9tRIOcrkCnQJ30lRkuL2rOODTxhp7D6SDx.pVRWmeu3A.XaVUSmoq";
 
-    /**
-     * Array of role titles
-     * <p>
-     * should be sorted ascending by access level ascending
-     * </p>
-     */
-    private static final String[] ROLE_TITLES = {"GUEST", "USER", "ADMIN"};
-
 
     private final PlatformTransactionManager transactionManager;
 
     private final UserRepository userRepository;
 
-    private final RoleRepository roleRepository;
-
     public Initializer(
         PlatformTransactionManager transactionManager,
-        UserRepository userRepository,
-        RoleRepository roleRepository
+        UserRepository userRepository
     ) {
         this.transactionManager = transactionManager;
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
     }
 
 
@@ -71,37 +56,10 @@ class Initializer implements ApplicationListener<ContextRefreshedEvent> {
 
 
     private void initialize() {
-        List<Role> roles = createRoles();
-        createAdminUser(roles);
+        createSuperAdmin();
     }
 
-    private List<Role> createRoles() {
-        // Get roles from RoleService
-        List<Role> roles = new ArrayList<>();
-        String[] roleTitles = RoleService.ROLES;
-        for (String roleTitle : roleTitles) {
-            Role role = new Role();
-            role.setTitle(roleTitle);
-            roles.add(role);
-        }
-
-        // Get old roles
-        List<Role> oldRoles = roleRepository.findAll();
-
-        // Create new roles
-        roles.stream().filter(role ->
-            !oldRoles.contains(role)
-        ).forEach(roleRepository::save);
-
-        // Delete removed roles
-        oldRoles.stream().filter(role ->
-            !roles.contains(role)
-        ).forEach(roleRepository::delete);
-
-        return roles;
-    }
-
-    private void createAdminUser(List<Role> roles) {
+    private void createSuperAdmin() {
         User adminUser = userRepository.findUserByUsername(ADMIN_USERNAME);
 
         // Create admin user if it does not exist
@@ -114,26 +72,17 @@ class Initializer implements ApplicationListener<ContextRefreshedEvent> {
         }
 
         // Check if admin user is not admin for all products
-        boolean isAdminForAllProducts = adminUser.getUserProducts().stream()
+        boolean isSuperAdminForAllProducts = adminUser.getUserProducts().stream()
             .anyMatch(userProduct ->
-                userProduct.getProduct() == null && userProduct.getRole() != null
+                userProduct.getProduct() == null && userProduct.getRole() == Role.SUPER_ADMIN
             );
-        if (!isAdminForAllProducts) {
-            // Get admin role
-            Optional<Role> optionalAdminRole = roles.stream().filter(
-                role -> role.getTitle().equals(RoleService.ADMIN)
-            ).findFirst();
-            Role adminRole = null;
-            if (optionalAdminRole.isPresent()) {
-                adminRole = optionalAdminRole.get();
-            }
-
+        if (!isSuperAdminForAllProducts) {
             // Set admin user as admin for all products
             List<UserProduct> adminUserProducts = new ArrayList<>();
             UserProduct adminUserProduct = new UserProduct();
             adminUserProduct.setUser(adminUser);
             adminUserProduct.setProduct(null);
-            adminUserProduct.setRole(adminRole);
+            adminUserProduct.setRole(Role.SUPER_ADMIN);
             adminUserProducts.add(adminUserProduct);
             adminUser.setUserProducts(adminUserProducts);
 
