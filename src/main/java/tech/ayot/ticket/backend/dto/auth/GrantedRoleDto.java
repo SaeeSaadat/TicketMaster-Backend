@@ -13,15 +13,15 @@ public class GrantedRoleDto implements GrantedAuthority {
      *     null means all products
      * </p>
      */
-    private Integer productId;
+    private final Long productId;
 
     /**
      * The role's title
      */
-    private Role role;
+    private final Role role;
 
     public GrantedRoleDto(
-        Integer productId,
+        Long productId,
         Role role
     ) {
         this.productId = productId;
@@ -29,20 +29,12 @@ public class GrantedRoleDto implements GrantedAuthority {
     }
 
 
-    public Integer getProductId() {
+    public Long getProductId() {
         return productId;
-    }
-
-    public void setProductId(Integer productId) {
-        this.productId = productId;
     }
 
     public Role getRole() {
         return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
     }
 
 

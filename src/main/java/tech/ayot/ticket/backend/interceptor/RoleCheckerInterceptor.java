@@ -49,10 +49,14 @@ public class RoleCheckerInterceptor implements HandlerInterceptor {
                 //noinspection unchecked
                 pathVariablesMap = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
             } catch (ClassCastException e) {
+                response.setStatus(HttpStatus.FORBIDDEN.value());
                 return false;
             }
             String productIdString = pathVariablesMap.get(WebMvcConfiguration.PRODUCT_ID_PATH_VARIABLE_NAME);
-            if (productIdString == null) return false;
+            if (productIdString == null) {
+                response.setStatus(HttpStatus.FORBIDDEN.value());
+                return false;
+            }
             int productId = Integer.parseInt(productIdString);
 
             hasRole &= roleService.userHasRole(productId, checkRoleAnnotation.role());

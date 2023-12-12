@@ -6,6 +6,7 @@ import tech.ayot.ticket.backend.model.BaseModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Represents an entity for a user
@@ -34,6 +35,25 @@ public class User extends BaseModel {
     @JoinColumn(name = "user_id")
     List<UserProduct> userProducts = new ArrayList<>();
 
+    /**
+     * The user's first name
+     */
+    @Column(length = 32)
+    private String firstName;
+
+    /**
+     * The user's last name
+     */
+    @Column(length = 32)
+    private String lastName;
+
+    /**
+     * The user's profile picture
+     */
+    @Column
+    private UUID profilePicture;
+
+
 
     public String getUsername() {
         return username;
@@ -57,5 +77,29 @@ public class User extends BaseModel {
 
     public void setUserProducts(List<UserProduct> userProducts) {
         this.userProducts = userProducts;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public UUID getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(UUID profilePicture) {
+        this.profilePicture = profilePicture;
     }
 }

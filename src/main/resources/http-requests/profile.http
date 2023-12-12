@@ -1,0 +1,27 @@
+### login
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "adminpass"
+}
+
+
+### view profile
+GET {{host}}/api/profile/view
+
+
+### update profile
+POST {{host}}/api/profile/update
+Content-Type: application/json
+
+{
+  "version": 12,
+  "firstName": "test",
+  "lastName": "testi",
+  "profilePicture": "fdd47618-96ea-4366-ae44-9435e7caa392",
+  "oldPassword": "adminpass",
+  "newPassword": "adminpass",
+  "newPasswordConfirmation" : "adminpass"
+}

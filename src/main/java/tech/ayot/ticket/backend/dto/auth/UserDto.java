@@ -18,7 +18,7 @@ public class UserDto implements UserDetails {
     /**
      * The user's ID
      */
-    private final Integer id;
+    private final Long id;
 
     /**
      * The user's username
@@ -46,7 +46,7 @@ public class UserDto implements UserDetails {
         this.password = user.getPassword();
         this.modifiedDate = user.getLastModifiedDate();
         this.roles = user.getUserProducts().stream().map(userProduct -> {
-                Integer productId = null;
+                Long productId = null;
                 if (userProduct.getProduct() != null) {
                     productId = userProduct.getProduct().getId();
                 }
@@ -59,7 +59,7 @@ public class UserDto implements UserDetails {
     }
 
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 

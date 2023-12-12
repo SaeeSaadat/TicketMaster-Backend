@@ -14,7 +14,7 @@ import java.util.Date;
  * Represents base model for entities
  */
 @MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
+@EntityListeners({AuditingEntityListener.class})
 public class BaseModel {
 
     /**
@@ -23,7 +23,7 @@ public class BaseModel {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Integer id;
+    protected Long id;
 
     /**
      * The entity's version
@@ -33,7 +33,7 @@ public class BaseModel {
      */
     @Version
     @Column(nullable = false)
-    protected Integer version;
+    protected Long version;
 
     /**
      * The user who created the entity
@@ -64,20 +64,20 @@ public class BaseModel {
     protected Date lastModifiedDate;
 
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getVersion() {
+    public Long getVersion() {
         return version;
     }
 
-    public void setVersion(Integer crc) {
-        this.version = crc;
+    public void setVersion(Long version) {
+        this.version = version;
     }
 
     public User getCreatedBy() {
