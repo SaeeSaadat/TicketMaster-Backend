@@ -40,7 +40,7 @@ public class ProfileService {
      * @return View profile response of current logged-in user
      */
     @Transactional(readOnly = true)
-    @GetMapping(value = {"/view"})
+    @GetMapping(value = {"/view"}, produces = {"application/json"})
     public ResponseEntity<ViewProfileResponse> view() {
         User user = authenticationService.getCurrentUser();
         ViewProfileResponse viewProfileResponse = new ViewProfileResponse(
@@ -60,7 +60,7 @@ public class ProfileService {
      * @return New view profile response of current logged-in user
      */
     @Transactional
-    @PostMapping(value = {"/update"}, consumes = {"application/json"})
+    @PostMapping(value = {"/update"}, consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<ViewProfileResponse> update(
         @RequestBody @Valid UpdateProfileRequest updateProfileRequest
     ) {
