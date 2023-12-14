@@ -6,6 +6,7 @@ import tech.ayot.ticket.backend.model.BaseModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Represents an entity for a user
@@ -14,16 +15,21 @@ import java.util.List;
 @Table(name = "users")
 public class User extends BaseModel {
 
+    public static final String USERNAME_REGEX = "[a-zA-Z0-9_]{1,32}";
+
+    public static final String PASSWORD_REGEX = "[a-zA-Z0-9~`!@#$%^&*()_+-=\\{\\}\\[\\]|\\:;\"'<,>.?/]{1,32}";
+
+
     /**
      * The user's username
      */
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false, length = 32)
     private String username;
 
     /**
      * The user's encoded password
      */
-    @Column(nullable = false)
+    @Column(nullable = false, length = 32)
     private String password;
 
     /**
@@ -33,6 +39,25 @@ public class User extends BaseModel {
     @AuditMappedBy(mappedBy = "user")
     @JoinColumn(name = "user_id")
     List<UserProduct> userProducts = new ArrayList<>();
+
+    /**
+     * The user's first name
+     */
+    @Column(length = 32)
+    private String firstName;
+
+    /**
+     * The user's last name
+     */
+    @Column(length = 32)
+    private String lastName;
+
+    /**
+     * The user's profile picture
+     */
+    @Column
+    private UUID profilePicture;
+
 
 
     public String getUsername() {
@@ -57,5 +82,29 @@ public class User extends BaseModel {
 
     public void setUserProducts(List<UserProduct> userProducts) {
         this.userProducts = userProducts;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public UUID getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(UUID profilePicture) {
+        this.profilePicture = profilePicture;
     }
 }

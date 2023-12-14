@@ -3,7 +3,7 @@ package tech.ayot.ticket.backend.service.auth;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import tech.ayot.ticket.backend.dto.auth.Role;
+import tech.ayot.ticket.backend.dto.auth.enumuration.Role;
 import tech.ayot.ticket.backend.dto.auth.UserDto;
 
 /**
@@ -17,7 +17,7 @@ public class RoleService {
      * @param role The role
      * @return true if the user has the role in the product
      */
-    public boolean userHasRole(Integer productId, Role role) {
+    public boolean userHasRole(Long productId, Role role) {
         // Get user DTO
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         boolean isAuthenticated = authentication != null && authentication.getPrincipal() instanceof UserDto;

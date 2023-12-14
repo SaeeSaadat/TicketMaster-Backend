@@ -29,6 +29,7 @@ public class SecurityConfiguration {
                 // Auth
                 .requestMatchers("/api/auth/**").permitAll()
                 // Other endpoints
+                .requestMatchers("/api/profile/**").authenticated()
                 .requestMatchers("/api/product/**").authenticated()
             )
             .csrf(AbstractHttpConfigurer::disable)

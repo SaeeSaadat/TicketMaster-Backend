@@ -8,7 +8,7 @@ import tech.ayot.ticket.backend.model.user.User;
  * Repository for user entity
  */
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
     User findUserByUsername(String username);
 }

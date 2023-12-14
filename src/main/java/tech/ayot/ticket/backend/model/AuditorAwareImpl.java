@@ -2,36 +2,28 @@ package tech.ayot.ticket.backend.model;
 
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.lang.NonNull;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import tech.ayot.ticket.backend.dto.auth.UserDto;
 import tech.ayot.ticket.backend.model.user.User;
-import tech.ayot.ticket.backend.repository.user.UserRepository;
+import tech.ayot.ticket.backend.service.auth.AuthenticationService;
 
 import java.util.Optional;
 
 @Component
 public class AuditorAwareImpl implements AuditorAware<User> {
 
-    private final UserRepository userRepository;
+    private final AuthenticationService authenticationService;
 
-    public AuditorAwareImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public AuditorAwareImpl(AuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
     }
-
 
     @NonNull
     @Override
     public Optional<User> getCurrentAuditor() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        // Return empty if user does not exist
-        if (authentication == null || !(authentication.getPrincipal() instanceof UserDto userDto)) {
+        User user = authenticationService.getCurrentUser();
+        if (user == null) {
             return Optional.empty();
         }
-
-        User user = userRepository.findUserByUsername(userDto.getUsername());
         return Optional.of(user);
     }
 }

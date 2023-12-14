@@ -3,6 +3,7 @@ package tech.ayot.ticket.backend.service.auth;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.*;
@@ -14,14 +15,12 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.session.Session;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import tech.ayot.ticket.backend.dto.auth.LoginRequest;
-import tech.ayot.ticket.backend.dto.auth.LoginResponse;
-import tech.ayot.ticket.backend.dto.auth.RegisterRequest;
+import tech.ayot.ticket.backend.dto.auth.request.LoginRequest;
+import tech.ayot.ticket.backend.dto.auth.response.LoginResponse;
+import tech.ayot.ticket.backend.dto.auth.request.RegisterRequest;
 import tech.ayot.ticket.backend.dto.auth.UserDto;
 import tech.ayot.ticket.backend.model.user.User;
 import tech.ayot.ticket.backend.repository.user.UserRepository;
-
-import javax.validation.Valid;
 
 /**
  * Authentication service
@@ -59,7 +58,7 @@ public class AuthenticationService {
      * @param loginRequest The login request.
      * @return A login response object if the login is successful, or an error object if any error occurs during the login process.
      */
-    @PostMapping(value = {"/login"},consumes = {"application/json"}, produces = {"application/json"})
+    @PostMapping(value = {"/login"}, consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<LoginResponse> login(
         HttpServletRequest request,
         HttpSession session,
@@ -67,15 +66,10 @@ public class AuthenticationService {
     ) {
         session.invalidate();
 
-        // Check if username and password exist
-        if (loginRequest.getUsername() == null || loginRequest.getPassword() == null) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid username or password");
-        }
-
         // Authenticate user
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-            loginRequest.getUsername().toLowerCase(),
-            loginRequest.getPassword()
+            loginRequest.username().toLowerCase(),
+            loginRequest.password()
         );
         Authentication authentication;
         try {
@@ -138,15 +132,15 @@ public class AuthenticationService {
         @Valid @RequestBody RegisterRequest request
     ) {
         // Check if user with the username already exists.
-        User user = userRepository.findUserByUsername(request.getUsername());
+        User user = userRepository.findUserByUsername(request.username());
         if (user != null) {
-            throw  new ResponseStatusException(HttpStatus.CONFLICT, "Username already exists");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already exists");
         }
 
         // Create user
         user = new User();
-        user.setUsername(request.getUsername());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setUsername(request.username());
+        user.setPassword(passwordEncoder.encode(request.password()));
         userRepository.save(user);
 
         return new ResponseEntity<>(HttpStatus.OK);
@@ -157,12 +151,8 @@ public class AuthenticationService {
      */
     @GetMapping(value = {"/user"}, produces = {"application/json"})
     public ResponseEntity<LoginResponse> currentUser() {
-        // Get current user DTO
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        boolean isAuthenticated = authentication != null && authentication.getPrincipal() instanceof UserDto;
-        UserDto userDto = isAuthenticated ? (UserDto) authentication.getPrincipal() : null;
-
         // Return login response with null values if user details is null
+        UserDto userDto = getCurrentUserDto();
         if (userDto == null) {
             LoginResponse loginResponse = new LoginResponse(
                 null,
@@ -172,7 +162,7 @@ public class AuthenticationService {
         }
 
         // Update user's current session if user is updated
-        User user = userRepository.findUserByUsername(userDto.getUsername());
+        User user = getCurrentUser();
         if (user.getLastModifiedDate() != null
             && (userDto.getModifiedDate() == null
             || userDto.getModifiedDate().compareTo(user.getLastModifiedDate()) != 0)) {
@@ -185,5 +175,19 @@ public class AuthenticationService {
             userDto.getUsername()
         );
         return new ResponseEntity<>(loginResponse, HttpStatus.OK);
+    }
+
+    public UserDto getCurrentUserDto() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean isAuthenticated = authentication != null && authentication.getPrincipal() instanceof UserDto;
+        return isAuthenticated ? (UserDto) authentication.getPrincipal() : null;
+    }
+
+    public User getCurrentUser() {
+        UserDto userDto = getCurrentUserDto();
+        if (userDto == null) {
+            return null;
+        }
+        return userRepository.getReferenceById(userDto.getId());
     }
 }

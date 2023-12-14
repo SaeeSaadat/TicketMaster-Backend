@@ -10,7 +10,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.HandlerMapping;
 import tech.ayot.ticket.backend.annotation.CheckRole;
 import tech.ayot.ticket.backend.configuration.WebMvcConfiguration;
-import tech.ayot.ticket.backend.dto.auth.Role;
+import tech.ayot.ticket.backend.dto.auth.enumuration.Role;
 import tech.ayot.ticket.backend.service.auth.RoleService;
 
 import java.lang.reflect.Method;
@@ -49,11 +49,15 @@ public class RoleCheckerInterceptor implements HandlerInterceptor {
                 //noinspection unchecked
                 pathVariablesMap = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
             } catch (ClassCastException e) {
+                response.setStatus(HttpStatus.FORBIDDEN.value());
                 return false;
             }
             String productIdString = pathVariablesMap.get(WebMvcConfiguration.PRODUCT_ID_PATH_VARIABLE_NAME);
-            if (productIdString == null) return false;
-            int productId = Integer.parseInt(productIdString);
+            if (productIdString == null) {
+                response.setStatus(HttpStatus.FORBIDDEN.value());
+                return false;
+            }
+            long productId = Integer.parseInt(productIdString);
 
             hasRole &= roleService.userHasRole(productId, checkRoleAnnotation.role());
         }
