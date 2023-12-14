@@ -18,13 +18,13 @@ public class User extends BaseModel {
     /**
      * The user's username
      */
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false, length = 32)
     private String username;
 
     /**
      * The user's encoded password
      */
-    @Column(nullable = false)
+    @Column(nullable = false, length = 32)
     private String password;
 
     /**

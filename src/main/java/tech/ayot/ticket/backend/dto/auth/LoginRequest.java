@@ -1,6 +1,8 @@
 package tech.ayot.ticket.backend.dto.auth;
 
-import javax.validation.constraints.NotNull;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 /**
  * Request body of login request.
@@ -9,8 +11,8 @@ import javax.validation.constraints.NotNull;
  * @see tech.ayot.ticket.backend.model.user.User User
  */
 public record LoginRequest(
-    @NotNull String username,
-    @NotNull String password
+    @NotBlank @Size(max = 32) String username,
+    @NotBlank @Size(max = 32) String password
 ) {
 
     public LoginRequest(

@@ -3,6 +3,7 @@ package tech.ayot.ticket.backend.service.auth;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.*;
@@ -20,8 +21,6 @@ import tech.ayot.ticket.backend.dto.auth.RegisterRequest;
 import tech.ayot.ticket.backend.dto.auth.UserDto;
 import tech.ayot.ticket.backend.model.user.User;
 import tech.ayot.ticket.backend.repository.user.UserRepository;
-
-import javax.validation.Valid;
 
 /**
  * Authentication service
@@ -66,11 +65,6 @@ public class AuthenticationService {
         @Valid @RequestBody LoginRequest loginRequest
     ) {
         session.invalidate();
-
-        // Check if username and password exist
-        if (loginRequest.username() == null || loginRequest.password() == null) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid username or password");
-        }
 
         // Authenticate user
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
