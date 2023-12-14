@@ -1,18 +1,19 @@
-package tech.ayot.ticket.backend.dto.user;
+package tech.ayot.ticket.backend.dto.user.request;
 
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Pattern;
+import tech.ayot.ticket.backend.model.user.User;
 
 import java.util.UUID;
 
 public record UpdateProfileRequest(
     @NotNull Long version,
-    @Size(max = 32) String firstName,
-    @Size(max = 32) String lastName,
+    @Pattern(regexp = "[a-zA-Z]{1,32}") String firstName,
+    @Pattern(regexp = "[a-zA-Z]{1,32}") String lastName,
     UUID profilePicture,
-    @Size(max = 32) String oldPassword,
-    @Size(max = 32) String newPassword,
-    @Size(max = 32) String newPasswordConfirmation
+    @Pattern(regexp = User.PASSWORD_REGEX) String oldPassword,
+    @Pattern(regexp = User.PASSWORD_REGEX) String newPassword,
+    @Pattern(regexp = User.PASSWORD_REGEX) String newPasswordConfirmation
 ) {
 
     public UpdateProfileRequest(

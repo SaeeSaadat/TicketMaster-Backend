@@ -1,6 +1,7 @@
 package tech.ayot.ticket.backend.dto.auth;
 
 import org.springframework.security.core.GrantedAuthority;
+import tech.ayot.ticket.backend.dto.auth.enumuration.Role;
 
 /**
  * Data Transfer Object for user role

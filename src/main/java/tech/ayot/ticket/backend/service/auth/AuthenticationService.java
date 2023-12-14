@@ -15,9 +15,9 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.session.Session;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import tech.ayot.ticket.backend.dto.auth.LoginRequest;
-import tech.ayot.ticket.backend.dto.auth.LoginResponse;
-import tech.ayot.ticket.backend.dto.auth.RegisterRequest;
+import tech.ayot.ticket.backend.dto.auth.request.LoginRequest;
+import tech.ayot.ticket.backend.dto.auth.response.LoginResponse;
+import tech.ayot.ticket.backend.dto.auth.request.RegisterRequest;
 import tech.ayot.ticket.backend.dto.auth.UserDto;
 import tech.ayot.ticket.backend.model.user.User;
 import tech.ayot.ticket.backend.repository.user.UserRepository;

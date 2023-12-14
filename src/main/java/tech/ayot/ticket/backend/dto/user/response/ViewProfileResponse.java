@@ -1,4 +1,4 @@
-package tech.ayot.ticket.backend.dto.user;
+package tech.ayot.ticket.backend.dto.user.response;
 
 import java.util.UUID;
 

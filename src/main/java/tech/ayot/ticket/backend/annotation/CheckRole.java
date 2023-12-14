@@ -1,6 +1,6 @@
 package tech.ayot.ticket.backend.annotation;
 
-import tech.ayot.ticket.backend.dto.auth.Role;
+import tech.ayot.ticket.backend.dto.auth.enumuration.Role;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -15,6 +15,11 @@ import java.util.UUID;
 @Table(name = "users")
 public class User extends BaseModel {
 
+    public static final String USERNAME_REGEX = "[a-zA-Z0-9_]{1,32}";
+
+    public static final String PASSWORD_REGEX = "[a-zA-Z0-9~`!@#$%^&*()_+-=\\{\\}\\[\\]|\\:;\"'<,>.?/]{1,32}";
+
+
     /**
      * The user's username
      */

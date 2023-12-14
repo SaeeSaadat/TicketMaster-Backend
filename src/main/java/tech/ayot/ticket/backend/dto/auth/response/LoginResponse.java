@@ -1,4 +1,4 @@
-package tech.ayot.ticket.backend.dto.auth;
+package tech.ayot.ticket.backend.dto.auth.response;
 
 /**
  * Response body of login and user request.
