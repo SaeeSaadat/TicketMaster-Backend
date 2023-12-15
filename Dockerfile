@@ -1,3 +1,11 @@
 FROM eclipse-temurin:17-jre
-COPY target/*.jar /app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+
+WORKDIR /app
+
+COPY . .
+
+RUN ./mvnw install
+
+COPY target/*.jar .
+
+CMD ["java","-jar","/app.jar"]

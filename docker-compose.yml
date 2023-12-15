@@ -22,6 +22,7 @@ services:
 
   ticket-master:
     image: ticket/ticket-master:latest
+    build: .
     container_name: ticket_master
     depends_on:
       - postgres
