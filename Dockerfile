@@ -4,7 +4,8 @@ WORKDIR /app
 
 COPY . .
 
-RUN ./mvnw install
+RUN ./mvnw clean compile
+RUN ./mvnw clean install
 
 COPY target/*.jar .
 
