@@ -28,9 +28,9 @@ import java.util.Map;
 @Transactional(readOnly = true)
 public class SessionService<S extends Session> implements UserDetailsService {
 
-    private static final String SPRING_SECURITY_CONTEXT_TOKEN = "SPRING_SECURITY_CONTEXT";
+    public static final String SPRING_SECURITY_CONTEXT_TOKEN = "SPRING_SECURITY_CONTEXT";
 
-    private static final String USERNAME_TOKEN = JdbcIndexedSessionRepository.PRINCIPAL_NAME_INDEX_NAME;
+    public static final String USERNAME_TOKEN = JdbcIndexedSessionRepository.PRINCIPAL_NAME_INDEX_NAME;
 
     private final FindByIndexNameSessionRepository<S> sessionRepository;
 
