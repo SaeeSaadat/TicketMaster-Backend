@@ -68,7 +68,7 @@ public class AuthenticationService {
 
         // Authenticate user
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-            loginRequest.username().toLowerCase(),
+            loginRequest.username(),
             loginRequest.password()
         );
         Authentication authentication;

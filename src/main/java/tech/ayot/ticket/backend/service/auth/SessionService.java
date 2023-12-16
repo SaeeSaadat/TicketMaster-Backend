@@ -103,7 +103,7 @@ public class SessionService<S extends Session> implements UserDetailsService {
 
     @Override
     public UserDto loadUserByUsername(String username) {
-        User user = userRepository.findUserByUsername(username.toLowerCase());
+        User user = userRepository.findUserByUsername(username);
         return new UserDto(user);
     }
 

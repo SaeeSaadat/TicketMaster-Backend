@@ -8,8 +8,8 @@ import java.util.UUID;
 
 public record UpdateProfileRequest(
     @NotNull Long version,
-    @Pattern(regexp = "[a-zA-Z]{1,32}") String firstName,
-    @Pattern(regexp = "[a-zA-Z]{1,32}") String lastName,
+    @Pattern(regexp = "[a-zA-Z]{1,64}") String firstName,
+    @Pattern(regexp = "[a-zA-Z]{1,64}") String lastName,
     UUID profilePicture,
     @Pattern(regexp = User.PASSWORD_REGEX) String oldPassword,
     @Pattern(regexp = User.PASSWORD_REGEX) String newPassword,

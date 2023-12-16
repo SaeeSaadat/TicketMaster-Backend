@@ -15,21 +15,21 @@ import java.util.UUID;
 @Table(name = "users")
 public class User extends BaseModel {
 
-    public static final String USERNAME_REGEX = "[a-zA-Z0-9_]{1,32}";
+    public static final String USERNAME_REGEX = "[a-zA-Z0-9_]{1,64}";
 
-    public static final String PASSWORD_REGEX = "[a-zA-Z0-9~`!@#$%^&*()_+-=\\{\\}\\[\\]|\\:;\"'<,>.?/]{1,32}";
+    public static final String PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[-_@$!%*?&])[-_A-Za-z\\d@$!%*?&]{8,64}$";
 
 
     /**
      * The user's username
      */
-    @Column(unique = true, nullable = false, length = 32)
+    @Column(unique = true, nullable = false, length = 64)
     private String username;
 
     /**
      * The user's encoded password
      */
-    @Column(nullable = false, length = 32)
+    @Column(nullable = false, length = 64)
     private String password;
 
     /**
@@ -43,13 +43,13 @@ public class User extends BaseModel {
     /**
      * The user's first name
      */
-    @Column(length = 32)
+    @Column(length = 64)
     private String firstName;
 
     /**
      * The user's last name
      */
-    @Column(length = 32)
+    @Column(length = 64)
     private String lastName;
 
     /**
