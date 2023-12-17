@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.session.Session;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import tech.ayot.ticket.backend.dto.auth.request.LoginRequest;
@@ -68,7 +69,7 @@ public class AuthenticationService {
 
         // Authenticate user
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-            loginRequest.username().toLowerCase(),
+            loginRequest.username(),
             loginRequest.password()
         );
         Authentication authentication;
@@ -149,6 +150,7 @@ public class AuthenticationService {
     /**
      * @return Login response of current logged-in user
      */
+    @Transactional(readOnly = true)
     @GetMapping(value = {"/user"}, produces = {"application/json"})
     public ResponseEntity<LoginResponse> currentUser() {
         // Return login response with null values if user details is null
