@@ -9,7 +9,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.session.FindByIndexNameSessionRepository;
 import org.springframework.session.Session;
 import org.springframework.session.jdbc.JdbcIndexedSessionRepository;
+import tech.ayot.ticket.backend.MockMvcResponse;
 import tech.ayot.ticket.backend.dto.auth.request.LoginRequest;
+import tech.ayot.ticket.backend.dto.auth.response.LoginResponse;
 import tech.ayot.ticket.backend.integration.BaseIntegrationTest;
 import tech.ayot.ticket.backend.model.user.User;
 import tech.ayot.ticket.backend.repository.user.UserRepository;
@@ -198,5 +200,19 @@ public class AuthenticationServiceIntegrationTest extends BaseIntegrationTest {
             user,
             status().isBadRequest()
         );
+    }
+
+    @Test
+    public void currentUserShouldReturn200AndAdminUser() throws Exception {
+        MockMvcResponse<LoginResponse> mockMvcResponse = sendRequest(
+            HttpMethod.GET,
+            "/api/auth/user",
+            MediaType.APPLICATION_JSON,
+            null,
+            status().isOk(),
+            LoginResponse.class
+        );
+        LoginResponse loginResponse = mockMvcResponse.body();
+        Assertions.assertEquals(ADMIN_USER, loginResponse.username());
     }
 }

@@ -38,7 +38,7 @@ public class BaseIntegrationTest {
     protected static final String ADMIN_USER = "admin";
 
     public static PostgreSQLContainer<?> POSTGRES_CONTAINER = new PostgreSQLContainer<>(
-        DockerImageName.parse("postgres:latest")
+        DockerImageName.parse("postgres:14.2-alpine")
     );
 
     static {
