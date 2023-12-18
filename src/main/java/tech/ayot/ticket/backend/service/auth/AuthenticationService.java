@@ -166,7 +166,7 @@ public class AuthenticationService {
         }
 
         // Update user's current session if user is updated
-        User user = getCurrentUser();
+        User user = userRepository.getReferenceById(userDto.getId());
         if (user.getLastModifiedDate() != null
             && (userDto.getModifiedDate() == null
             || userDto.getModifiedDate().compareTo(user.getLastModifiedDate()) != 0)) {
