@@ -1,6 +1,7 @@
 package tech.ayot.ticket.backend.configuration;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import tech.ayot.ticket.backend.interceptor.RoleCheckerInterceptor;
@@ -20,5 +21,12 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(roleCheckerInterceptor);
+    }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**").allowedHeaders("*");
+        registry.addMapping("/**").allowedMethods("*");
+        registry.addMapping("/**").allowedOrigins("*");
     }
 }
