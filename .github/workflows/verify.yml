@@ -21,3 +21,9 @@
             token: ${{ secrets.TC_CLOUD_TOKEN }}
         - name: Build with Maven
           run: ./mvnw verify
+        - name: Build and push Docker images
+          uses: docker/build-push-action@v5.1.0
+          with:
+            tags: ticketmastergang/ticketmaster:backend
+            
+    
