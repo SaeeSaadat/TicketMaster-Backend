@@ -21,8 +21,7 @@ services:
       - POSTGRES_PASSWORD=ticket_master_server_password
 
   ticket-master:
-    image: ticket/ticket-master:latest
-    build: .
+    image: ticketmastergang/ticketmaster:backend
     container_name: ticket_master
     depends_on:
       - postgres
