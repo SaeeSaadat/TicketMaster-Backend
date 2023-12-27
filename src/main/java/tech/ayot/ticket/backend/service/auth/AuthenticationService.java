@@ -17,11 +17,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import tech.ayot.ticket.backend.dto.auth.GrantedRoleDto;
+import tech.ayot.ticket.backend.dto.auth.UserDto;
 import tech.ayot.ticket.backend.dto.auth.enumuration.Role;
 import tech.ayot.ticket.backend.dto.auth.request.LoginRequest;
-import tech.ayot.ticket.backend.dto.auth.response.LoginResponse;
 import tech.ayot.ticket.backend.dto.auth.request.RegisterRequest;
-import tech.ayot.ticket.backend.dto.auth.UserDto;
+import tech.ayot.ticket.backend.dto.auth.response.LoginResponse;
 import tech.ayot.ticket.backend.model.user.User;
 import tech.ayot.ticket.backend.repository.user.UserRepository;
 
@@ -194,16 +194,22 @@ public class AuthenticationService {
 
 
     private static LoginResponse getLoginResponse(UserDto userDto) {
-        GrantedRoleDto grantedRole = !userDto.getRoles().isEmpty() ? userDto.getRoles().get(0) : null;
+        GrantedRoleDto grantedRole = userDto.getRoles()
+            .stream().filter(roleDto -> roleDto.getProductId() != null)
+            .findFirst().orElse(null);
+        GrantedRoleDto grantedRootRole = userDto.getRoles()
+            .stream().filter(roleDto -> roleDto.getProductId() == null)
+            .findFirst().orElse(null);
+
         Long productId = grantedRole != null ? grantedRole.getProductId() : null;
-        Boolean hasRootRole = grantedRole != null && grantedRole.getProductId() == null;
         Role role = grantedRole != null ? grantedRole.getRole() : null;
+        Role rootRole = grantedRootRole != null ? grantedRootRole.getRole() : null;
         return new LoginResponse(
             userDto.getId(),
             userDto.getUsername(),
             productId,
-            hasRootRole,
-            role
+            role,
+            rootRole
         );
     }
 }

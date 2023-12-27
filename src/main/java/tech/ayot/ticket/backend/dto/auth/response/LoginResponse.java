@@ -12,7 +12,7 @@ public record LoginResponse(
     Long userId,
     String username,
     Long productId,
-    Boolean hasRootRole,
-    Role role
+    Role role,
+    Role rootRole
 ) {
 }
