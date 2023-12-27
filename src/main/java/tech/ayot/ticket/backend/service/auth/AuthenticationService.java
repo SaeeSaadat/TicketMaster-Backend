@@ -16,6 +16,8 @@ import org.springframework.session.Session;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import tech.ayot.ticket.backend.dto.auth.GrantedRoleDto;
+import tech.ayot.ticket.backend.dto.auth.enumuration.Role;
 import tech.ayot.ticket.backend.dto.auth.request.LoginRequest;
 import tech.ayot.ticket.backend.dto.auth.response.LoginResponse;
 import tech.ayot.ticket.backend.dto.auth.request.RegisterRequest;
@@ -98,10 +100,7 @@ public class AuthenticationService {
         );
 
         // Return login response
-        LoginResponse loginResponse = new LoginResponse(
-            userDto.getId(),
-            userDto.getUsername()
-        );
+        LoginResponse loginResponse = getLoginResponse(userDto);
         return new ResponseEntity<>(loginResponse, HttpStatus.OK);
     }
 
@@ -158,6 +157,9 @@ public class AuthenticationService {
         if (userDto == null) {
             LoginResponse loginResponse = new LoginResponse(
                 null,
+                null,
+                null,
+                null,
                 null
             );
             return new ResponseEntity<>(loginResponse, HttpStatus.OK);
@@ -172,10 +174,7 @@ public class AuthenticationService {
         }
 
         // Return login response with current user's id and username
-        LoginResponse loginResponse = new LoginResponse(
-            userDto.getId(),
-            userDto.getUsername()
-        );
+        LoginResponse loginResponse = getLoginResponse(userDto);
         return new ResponseEntity<>(loginResponse, HttpStatus.OK);
     }
 
@@ -191,5 +190,20 @@ public class AuthenticationService {
             return null;
         }
         return userRepository.getReferenceById(userDto.getId());
+    }
+
+
+    private static LoginResponse getLoginResponse(UserDto userDto) {
+        GrantedRoleDto grantedRole = !userDto.getRoles().isEmpty() ? userDto.getRoles().get(0) : null;
+        Long productId = grantedRole != null ? grantedRole.getProductId() : null;
+        Boolean hasRootRole = grantedRole != null && grantedRole.getProductId() == null;
+        Role role = grantedRole != null ? grantedRole.getRole() : null;
+        return new LoginResponse(
+            userDto.getId(),
+            userDto.getUsername(),
+            productId,
+            hasRootRole,
+            role
+        );
     }
 }

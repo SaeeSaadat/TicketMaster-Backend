@@ -1,5 +1,7 @@
 package tech.ayot.ticket.backend.dto.auth.response;
 
+import tech.ayot.ticket.backend.dto.auth.enumuration.Role;
+
 /**
  * Response body of login and user request.
  *
@@ -8,6 +10,9 @@ package tech.ayot.ticket.backend.dto.auth.response;
  */
 public record LoginResponse(
     Long userId,
-    String username
+    String username,
+    Long productId,
+    Boolean hasRootRole,
+    Role role
 ) {
 }
