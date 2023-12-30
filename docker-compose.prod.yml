@@ -1,0 +1,33 @@
+version: '3.9'
+
+name: ticket-master-app
+
+volumes:
+  db:
+    driver: local
+
+services:
+  postgres:
+    image: postgres:14.2-alpine
+    container_name: ticket_master_postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - "db:/var/lib/postgresql/data"
+    restart: always
+    environment:
+      - POSTGRES_DB=ticket_master_server
+      - POSTGRES_USER=ticket_master_server_user
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+
+  ticket-master:
+    image: ticketmastergang/ticketmaster:backend
+    container_name: ticket_master
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://ticket_master_postgres:5432/ticket_master_server
+      - SPRING_DATASOURCE_USERNAME=ticket_master_server_user
+      - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}
