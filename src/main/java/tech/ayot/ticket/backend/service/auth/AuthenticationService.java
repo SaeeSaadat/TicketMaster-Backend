@@ -204,6 +204,9 @@ public class AuthenticationService {
         Long productId = grantedRole != null ? grantedRole.getProductId() : null;
         Role role = grantedRole != null ? grantedRole.getRole() : null;
         Role rootRole = grantedRootRole != null ? grantedRootRole.getRole() : null;
+        if (rootRole == null || rootRole.getLevel() < Role.USER.getLevel()) {
+            rootRole = Role.USER;
+        }
         return new LoginResponse(
             userDto.getId(),
             userDto.getUsername(),
