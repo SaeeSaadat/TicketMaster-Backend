@@ -60,9 +60,9 @@
             uses: actions/checkout@v2
 
           - name: Deploy
-	    env:
-	      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+            env:
+                POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
             run: |
-              docker-compose -f docker-compose.prod.yml pull
-              docker-compose -f docker-compose.prod.yml up -d
-    
+                docker-compose -f docker-compose.prod.yml pull
+                docker-compose -f docker-compose.prod.yml up -d
+      
