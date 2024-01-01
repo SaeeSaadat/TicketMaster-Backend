@@ -7,7 +7,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import tech.ayot.ticket.backend.dto.auth.UserDto;
 import tech.ayot.ticket.backend.dto.user.request.UpdateProfileRequest;
 import tech.ayot.ticket.backend.dto.user.response.ViewProfileResponse;
 import tech.ayot.ticket.backend.model.user.User;
@@ -63,8 +62,7 @@ public class ProfileService {
         @RequestBody @Valid UpdateProfileRequest request
     ) {
         // Get user
-        UserDto userDto = authenticationService.getCurrentUserDto();
-        User user = userRepository.getReferenceById(userDto.getId());
+        User user = authenticationService.getCurrentUser();
 
         if (!request.version().equals(user.getVersion())) {
             throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Version is not correct");

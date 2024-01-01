@@ -1,6 +1,5 @@
 package tech.ayot.ticket.backend.integration.auth;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpMethod;
@@ -12,8 +11,6 @@ import tech.ayot.ticket.backend.integration.BaseIntegrationTest;
 import tech.ayot.ticket.backend.model.user.User;
 import tech.ayot.ticket.backend.repository.user.UserRepository;
 
-import java.util.List;
-
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class ProfileServiceIntegrationTest extends BaseIntegrationTest {
@@ -22,17 +19,6 @@ public class ProfileServiceIntegrationTest extends BaseIntegrationTest {
 
     public ProfileServiceIntegrationTest(UserRepository userRepository) {
         this.userRepository = userRepository;
-    }
-
-
-    @AfterEach
-    public void cleanUp() {
-        // Get all users but admin user
-        List<User> users = userRepository.findAll();
-        users = users.stream().filter(user -> !ADMIN_USER.equals(user.getUsername())).toList();
-
-        // Delete users
-        userRepository.deleteAll(users);
     }
 
     @Test
