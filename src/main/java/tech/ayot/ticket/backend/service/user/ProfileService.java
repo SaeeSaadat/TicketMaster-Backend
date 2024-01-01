@@ -71,20 +71,26 @@ public class ProfileService {
         }
 
         // Update user fields
-        user.setFirstName(request.firstName());
-        user.setLastName(request.lastName());
-        user.setProfilePicture(request.profilePicture());
+        if (request.firstName() != null) {
+            user.setFirstName(request.firstName());
+        }
+        if (request.lastName() != null) {
+            user.setLastName(request.lastName());
+        }
+        if (request.profilePicture() != null) {
+            user.setProfilePicture(request.profilePicture());
+        }
 
         // Update password
         String oldPassword = request.oldPassword();
         String newPassword = request.newPassword();
         String newPasswordConfirmation = request.newPasswordConfirmation();
         if (newPassword != null) {
-            if (oldPassword == null || !passwordEncoder.matches(oldPassword, user.getPassword())) {
-                throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Old password is wrong");
-            }
             if (!newPassword.equals(newPasswordConfirmation)) {
                 throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Password does not match");
+            }
+            if (oldPassword == null || !passwordEncoder.matches(oldPassword, user.getPassword())) {
+                throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Old password is wrong");
             }
             user.setPassword(passwordEncoder.encode(request.newPassword()));
         }
