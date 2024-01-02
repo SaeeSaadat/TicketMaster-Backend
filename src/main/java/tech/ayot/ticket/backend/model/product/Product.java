@@ -5,6 +5,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import tech.ayot.ticket.backend.model.BaseModel;
 
+import java.rmi.server.UID;
+import java.util.UUID;
+
 /**
  * Represents an entity for a product
  */
@@ -18,6 +21,11 @@ public class Product extends BaseModel {
     @Column(unique = true, nullable = false)
     private String name;
 
+    @Column(length = 4096)
+    private String description;
+
+    @Column(unique = true)
+    private UUID imageId;
 
     public String getName() {
         return name;
@@ -25,5 +33,21 @@ public class Product extends BaseModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public UUID getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(UUID imageId) {
+        this.imageId = imageId;
     }
 }

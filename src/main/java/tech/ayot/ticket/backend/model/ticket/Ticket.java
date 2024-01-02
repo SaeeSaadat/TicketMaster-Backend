@@ -14,5 +14,4 @@ public abstract class Ticket extends BaseModel {
     @Column(length = 4096)
     private String description;
 
-
 }
