@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import tech.ayot.ticket.backend.dto.auth.enumuration.Role;
 import tech.ayot.ticket.backend.dto.product.request.CreateProductRequest;
-import tech.ayot.ticket.backend.dto.product.response.CreateProductResponse;
+import tech.ayot.ticket.backend.dto.product.request.UpdateProductRequest;
 import tech.ayot.ticket.backend.dto.product.response.ViewProductResponse;
 import tech.ayot.ticket.backend.model.product.Product;
 import tech.ayot.ticket.backend.model.user.User;
@@ -33,7 +33,7 @@ public class ProductService {
 
     @Transactional
     @PostMapping(value = {""}, consumes = {"application/json"}, produces = {"application/json"})
-    public ResponseEntity<CreateProductResponse> create(@RequestBody CreateProductRequest request) {
+    public ResponseEntity<Long> create(@RequestBody CreateProductRequest request) {
         if (productRepository.existsProductByName(request.name())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Product with this name already exists");
         }
@@ -57,21 +57,45 @@ public class ProductService {
         user.getUserProducts().add(userProduct);
         userRepository.save(user);
 
-        CreateProductResponse createProductResponse = new CreateProductResponse(product.getId());
-
-        return new ResponseEntity<>(createProductResponse, HttpStatus.OK);
+        return new ResponseEntity<>(product.getId(), HttpStatus.OK);
     }
 
-//    @CheckRole(role = Role.ADMIN)
-//    @GetMapping(value = {"/{" + PRODUCT_ID_PATH_VARIABLE_NAME + "}/adminView"}, produces = {"application/json"})
-//    public ResponseEntity<?> adminView(@PathVariable Long productId) {
-//
-//    }
+    @Transactional
+    @PostMapping(value = {"/update"}, consumes = {"application/json"}, produces = {"application/json"})
+    public ResponseEntity<Long> update(@RequestBody UpdateProductRequest request) {
+        Product product = productRepository.findProductById(request.productId());
+        if (product == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product with this id not found");
+        }
+
+        User user = authenticationService.getCurrentUser();
+        Product finalProduct = product;
+        //TODO test
+        if (user.getUserProducts().stream().filter(userProduct -> userProduct.getProduct() == finalProduct).toList().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "The user doesn't have access to edit this product");
+        }
+
+        product.setDescription(request.description());
+        product.setImageId(request.imageId());
+
+        product = productRepository.save(product);
+
+        return new ResponseEntity<>(product.getId(), HttpStatus.OK);
+    }
 
     @GetMapping(value = "/{" + PRODUCT_ID_PATH_VARIABLE_NAME + "}/view", produces = {"application/json"})
     public ResponseEntity<?> view(@PathVariable long productId) {
 
-        ViewProductResponse viewProductResponse = new ViewProductResponse();
+        Product product = productRepository.findProductById(productId);
+        if (product == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product with this id not found");
+        }
+
+        ViewProductResponse viewProductResponse = new ViewProductResponse(
+            product.getName(),
+            product.getDescription(),
+            product.getImageId()
+        );
         return new ResponseEntity<>(viewProductResponse, HttpStatus.OK);
     }
 

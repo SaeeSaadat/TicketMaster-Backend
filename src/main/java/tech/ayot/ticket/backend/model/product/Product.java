@@ -4,8 +4,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import tech.ayot.ticket.backend.model.BaseModel;
-
-import java.rmi.server.UID;
 import java.util.UUID;
 
 /**
