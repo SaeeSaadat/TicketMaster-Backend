@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import tech.ayot.ticket.backend.annotation.CheckRole;
 import tech.ayot.ticket.backend.dto.auth.enumuration.Role;
 import tech.ayot.ticket.backend.dto.product.request.CreateProductRequest;
 import tech.ayot.ticket.backend.dto.product.request.UpdateProductRequest;
@@ -61,18 +62,12 @@ public class ProductService {
     }
 
     @Transactional
-    @PostMapping(value = {"/update"}, consumes = {"application/json"}, produces = {"application/json"})
+    @PostMapping(value = {"/{" + PRODUCT_ID_PATH_VARIABLE_NAME + "}/update"}, consumes = {"application/json"}, produces = {"application/json"})
+    @CheckRole(role = Role.ADMIN)
     public ResponseEntity<Long> update(@RequestBody UpdateProductRequest request) {
         Product product = productRepository.findProductById(request.productId());
         if (product == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product with this id not found");
-        }
-
-        User user = authenticationService.getCurrentUser();
-        Product finalProduct = product;
-        //TODO test
-        if (user.getUserProducts().stream().filter(userProduct -> userProduct.getProduct() == finalProduct).toList().isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "The user doesn't have access to edit this product");
         }
 
         product.setDescription(request.description());
@@ -83,7 +78,7 @@ public class ProductService {
         return new ResponseEntity<>(product.getId(), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/{" + PRODUCT_ID_PATH_VARIABLE_NAME + "}/view", produces = {"application/json"})
+    @GetMapping(value ={ "/{" + PRODUCT_ID_PATH_VARIABLE_NAME + "}/view"}, produces = {"application/json"})
     public ResponseEntity<?> view(@PathVariable long productId) {
 
         Product product = productRepository.findProductById(productId);
