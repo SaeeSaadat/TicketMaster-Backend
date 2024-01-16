@@ -1,5 +1,6 @@
 package tech.ayot.ticket.backend.service.product;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +35,7 @@ public class ProductService {
 
     @Transactional
     @PostMapping(value = {""}, consumes = {"application/json"}, produces = {"application/json"})
-    public ResponseEntity<Long> create(@RequestBody CreateProductRequest request) {
+    public ResponseEntity<Long> create(@RequestBody @NotNull CreateProductRequest request) {
         if (productRepository.existsProductByName(request.name())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Product with this name already exists");
         }
@@ -64,7 +65,7 @@ public class ProductService {
     @Transactional
     @PostMapping(value = {"/{" + PRODUCT_ID_PATH_VARIABLE_NAME + "}/update"}, consumes = {"application/json"}, produces = {"application/json"})
     @CheckRole(role = Role.ADMIN)
-    public ResponseEntity<Long> update(@RequestBody UpdateProductRequest request) {
+    public ResponseEntity<Long> update(@RequestBody @NotNull UpdateProductRequest request) {
         Product product = productRepository.findProductById(request.productId());
         if (product == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product with this id not found");
@@ -79,8 +80,7 @@ public class ProductService {
     }
 
     @GetMapping(value ={ "/{" + PRODUCT_ID_PATH_VARIABLE_NAME + "}/view"}, produces = {"application/json"})
-    public ResponseEntity<?> view(@PathVariable long productId) {
-
+    public ResponseEntity<ViewProductResponse> view(@PathVariable long productId) {
         Product product = productRepository.findProductById(productId);
         if (product == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product with this id not found");
@@ -94,5 +94,16 @@ public class ProductService {
         return new ResponseEntity<>(viewProductResponse, HttpStatus.OK);
     }
 
+    @Transactional
+    @DeleteMapping(value = {"/{" + PRODUCT_ID_PATH_VARIABLE_NAME + "}/delete"})
+    @CheckRole(role = Role.ADMIN)
+    public ResponseEntity<Void> delete(@PathVariable long productId) {
+        Product product = productRepository.findProductById(productId);
+        if (product == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product with this id not found");
+        }
 
+        productRepository.deleteById(productId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
