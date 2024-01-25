@@ -14,8 +14,6 @@ import tech.ayot.ticket.backend.model.user.User;
 import tech.ayot.ticket.backend.repository.user.UserRepository;
 import tech.ayot.ticket.backend.service.auth.AuthenticationService;
 
-import java.util.Objects;
-
 @RestController
 @RequestMapping("/api/profile")
 public class ProfileService {
@@ -40,7 +38,7 @@ public class ProfileService {
      * @return View profile response of current logged-in user
      */
     @Transactional(readOnly = true)
-    @GetMapping(value = {"/view"}, produces = {"application/json"})
+    @GetMapping(value = {""}, produces = {"application/json"})
     public ResponseEntity<ViewProfileResponse> view() {
         User user = authenticationService.getCurrentUser();
         ViewProfileResponse viewProfileResponse = new ViewProfileResponse(
@@ -56,32 +54,31 @@ public class ProfileService {
     /**
      * Updates current logged-in user
      *
-     * @param updateProfileRequest The update request
+     * @param request The update request
      * @return New view profile response of current logged-in user
      */
     @Transactional
-    @PostMapping(value = {"/update"}, consumes = {"application/json"}, produces = {"application/json"})
+    @PutMapping(value = {""}, consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<ViewProfileResponse> update(
-        @RequestBody @Valid UpdateProfileRequest updateProfileRequest
+        @RequestBody @Valid UpdateProfileRequest request
     ) {
         // Get user
         UserDto userDto = authenticationService.getCurrentUserDto();
         User user = userRepository.getReferenceById(userDto.getId());
 
-        if (!Objects.equals(updateProfileRequest.version(), user.getVersion())) {
+        if (!request.version().equals(user.getVersion())) {
             throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Version is not correct");
         }
 
         // Update user fields
-        user.setVersion(updateProfileRequest.version());
-        user.setFirstName(updateProfileRequest.firstName());
-        user.setLastName(updateProfileRequest.lastName());
-        user.setProfilePicture(updateProfileRequest.profilePicture());
+        user.setFirstName(request.firstName());
+        user.setLastName(request.lastName());
+        user.setProfilePicture(request.profilePicture());
 
         // Update password
-        String oldPassword = updateProfileRequest.oldPassword();
-        String newPassword = updateProfileRequest.newPassword();
-        String newPasswordConfirmation = updateProfileRequest.newPasswordConfirmation();
+        String oldPassword = request.oldPassword();
+        String newPassword = request.newPassword();
+        String newPasswordConfirmation = request.newPasswordConfirmation();
         if (newPassword != null) {
             if (oldPassword == null || !passwordEncoder.matches(oldPassword, user.getPassword())) {
                 throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Old password is wrong");
@@ -89,7 +86,7 @@ public class ProfileService {
             if (!newPassword.equals(newPasswordConfirmation)) {
                 throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Password does not match");
             }
-            user.setPassword(passwordEncoder.encode(updateProfileRequest.newPassword()));
+            user.setPassword(passwordEncoder.encode(request.newPassword()));
         }
 
         // Save user

@@ -1,0 +1,31 @@
+### login
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "adminpass"
+}
+
+### create prduct
+POST {{host}}/api/product
+Content-Type: application/json
+
+{
+  "name": "test"
+}
+
+### view product
+GET {{host}}/api/product/2
+
+### update prduct
+PUT {{host}}/api/product/2
+Content-Type: application/json
+
+{
+  "version": 0,
+  "description": "Hello"
+}
+
+### delete product
+DELETE {{host}}/api/product/3

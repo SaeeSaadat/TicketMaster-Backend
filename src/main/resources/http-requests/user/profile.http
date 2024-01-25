@@ -9,19 +9,19 @@ Content-Type: application/json
 
 
 ### view profile
-GET {{host}}/api/profile/view
+GET {{host}}/api/profile
 
 
 ### update profile
-POST {{host}}/api/profile/update
+PUT {{host}}/api/profile
 Content-Type: application/json
 
 {
-  "version": 12,
+  "version": 1,
   "firstName": "test",
   "lastName": "testi",
   "profilePicture": "fdd47618-96ea-4366-ae44-9435e7caa392",
-  "oldPassword": "adminpass",
-  "newPassword": "adminpass",
-  "newPasswordConfirmation" : "adminpass"
+  "oldPassword": null,
+  "newPassword": null,
+  "newPasswordConfirmation" : null
 }

@@ -31,7 +31,7 @@ class Initializer implements ApplicationListener<ContextRefreshedEvent> {
     /**
      * The default admin encoded password
      */
-    private static final String ADMIN_PASSWORD = "$2a$10$q43hul6LoZSw5Kc5oYHRk.Ha32XhGFUiKkvC/euxiLHQUZ2WlFqhu";
+    private static final String ADMIN_PASSWORD = "$2a$10$awt8Ppzf2E/.MfDllrvQUecNVCU2U7vpvIXa/XsO.CBDYXLGu8gCe";
 
 
     private final PlatformTransactionManager transactionManager;

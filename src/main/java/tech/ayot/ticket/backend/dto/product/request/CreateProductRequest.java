@@ -15,5 +15,4 @@ public record CreateProductRequest(
         this.description = description;
         this.imageId = imageId;
     }
-
 }
