@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import tech.ayot.ticket.backend.MockMvcResponse;
 import tech.ayot.ticket.backend.dto.user.request.UpdateProfileRequest;
 import tech.ayot.ticket.backend.dto.user.response.ViewProfileResponse;
 import tech.ayot.ticket.backend.integration.BaseIntegrationTest;
@@ -25,7 +24,7 @@ public class ProfileServiceIntegrationTest extends BaseIntegrationTest {
     public void viewShouldReturn200AndProfileUser() throws Exception {
         MockMvcResponse<ViewProfileResponse> mockMvcResponse = sendRequest(
             HttpMethod.GET,
-            "/api/profile/view",
+            "/api/profile",
             MediaType.APPLICATION_JSON,
             null,
             status().isOk(),
@@ -51,8 +50,8 @@ public class ProfileServiceIntegrationTest extends BaseIntegrationTest {
         );
 
         MockMvcResponse<ViewProfileResponse> mockMvcResponse = sendRequest(
-            HttpMethod.POST,
-            "/api/profile/update",
+            HttpMethod.PUT,
+            "/api/profile",
             MediaType.APPLICATION_JSON,
             request,
             status().isOk(),
@@ -81,8 +80,8 @@ public class ProfileServiceIntegrationTest extends BaseIntegrationTest {
         );
 
         sendRequest(
-            HttpMethod.POST,
-            "/api/profile/update",
+            HttpMethod.PUT,
+            "/api/profile",
             MediaType.APPLICATION_JSON,
             request,
             status().isNotAcceptable()
@@ -102,8 +101,8 @@ public class ProfileServiceIntegrationTest extends BaseIntegrationTest {
         );
 
         sendRequest(
-            HttpMethod.POST,
-            "/api/profile/update",
+            HttpMethod.PUT,
+            "/api/profile",
             MediaType.APPLICATION_JSON,
             request,
             status().isBadRequest()
@@ -123,8 +122,8 @@ public class ProfileServiceIntegrationTest extends BaseIntegrationTest {
         );
 
         sendRequest(
-            HttpMethod.POST,
-            "/api/profile/update",
+            HttpMethod.PUT,
+            "/api/profile",
             MediaType.APPLICATION_JSON,
             request,
             status().isNotAcceptable()
@@ -144,8 +143,8 @@ public class ProfileServiceIntegrationTest extends BaseIntegrationTest {
         );
 
         sendRequest(
-            HttpMethod.POST,
-            "/api/profile/update",
+            HttpMethod.PUT,
+            "/api/profile",
             MediaType.APPLICATION_JSON,
             request,
             status().isNotAcceptable()

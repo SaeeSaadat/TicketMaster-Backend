@@ -9,7 +9,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.session.FindByIndexNameSessionRepository;
 import org.springframework.session.Session;
 import org.springframework.session.jdbc.JdbcIndexedSessionRepository;
-import tech.ayot.ticket.backend.MockMvcResponse;
 import tech.ayot.ticket.backend.dto.auth.request.LoginRequest;
 import tech.ayot.ticket.backend.dto.auth.response.LoginResponse;
 import tech.ayot.ticket.backend.integration.BaseIntegrationTest;
@@ -137,7 +136,6 @@ public class AuthenticationServiceIntegrationTest extends BaseIntegrationTest {
         user.setPassword(passwordEncoder.encode(password));
         userRepository.save(user);
 
-        Instant beforeLogin = Instant.now();
         LoginRequest loginRequest = new LoginRequest(
             username,
             password + "X"

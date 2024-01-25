@@ -1,6 +1,7 @@
 package tech.ayot.ticket.backend.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -24,7 +25,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.utility.DockerImageName;
 import tech.ayot.ticket.backend.BackendApplication;
-import tech.ayot.ticket.backend.MockMvcResponse;
 
 @AutoConfigureMockMvc
 @ExtendWith(MockitoExtension.class)
@@ -56,6 +56,11 @@ public class BaseIntegrationTest {
         registry.add("spring.datasource.username", POSTGRES_CONTAINER::getUsername);
         registry.add("spring.datasource.password", POSTGRES_CONTAINER::getPassword);
     }
+
+
+    public record MockMvcResponse<T>(T body, Cookie[] cookies) {
+    }
+
 
     public <ReqT, ResT> MockMvcResponse<ResT> sendRequest(
         HttpMethod method,
