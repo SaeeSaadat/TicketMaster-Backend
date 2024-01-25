@@ -116,7 +116,7 @@ public class ProfileServiceUnitTest extends BaseUnitTest {
     }
 
     @Test
-    public void updateShouldReturn401IfVersionDoesNotMatch() {
+    public void updateShouldReturn406IfVersionDoesNotMatch() {
         // Create user
         User user = new User();
         user.setVersion(10L);
@@ -149,7 +149,7 @@ public class ProfileServiceUnitTest extends BaseUnitTest {
     }
 
     @Test
-    public void updateShouldReturn401IfPasswordsDoNotMatch() {
+    public void updateShouldReturn406IfPasswordsDoNotMatch() {
         // Create user
         User user = new User();
         user.setVersion(10L);
@@ -182,7 +182,7 @@ public class ProfileServiceUnitTest extends BaseUnitTest {
     }
 
     @Test
-    public void updateShouldReturn401IfOldPasswordDoesNotMatch() {
+    public void updateShouldReturn406IfOldPasswordDoesNotMatch() {
         // Create user
         User user = new User();
         user.setVersion(10L);
