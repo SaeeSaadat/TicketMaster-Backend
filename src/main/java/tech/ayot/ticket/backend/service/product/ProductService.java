@@ -17,7 +17,6 @@ import tech.ayot.ticket.backend.model.user.User;
 import tech.ayot.ticket.backend.model.user.UserProduct;
 import tech.ayot.ticket.backend.repository.product.ProductRepository;
 import tech.ayot.ticket.backend.repository.user.UserProductRepository;
-import tech.ayot.ticket.backend.repository.user.UserRepository;
 import tech.ayot.ticket.backend.service.auth.AuthenticationService;
 
 import static tech.ayot.ticket.backend.configuration.WebMvcConfiguration.PRODUCT_ID_PATH_VARIABLE_NAME;
@@ -32,18 +31,14 @@ public class ProductService {
 
     private final UserProductRepository userProductRepository;
 
-    private final UserRepository userRepository;
-
     public ProductService(
         AuthenticationService authenticationService,
         ProductRepository productRepository,
-        UserProductRepository userProductRepository,
-        UserRepository userRepository
+        UserProductRepository userProductRepository
     ) {
         this.authenticationService = authenticationService;
         this.productRepository = productRepository;
         this.userProductRepository = userProductRepository;
-        this.userRepository = userRepository;
     }
 
 
@@ -61,7 +56,10 @@ public class ProductService {
         }
 
         User user = authenticationService.getCurrentUser();
-        if (user.getUserProducts().stream().anyMatch(userProduct -> userProduct.getProduct() != null)) {
+        boolean userIsProductAdmin = user.getUserProducts().stream().anyMatch(
+            userProduct -> userProduct.getProduct() != null && userProduct.getRole().getLevel() >= Role.ADMIN.getLevel()
+        );
+        if (userIsProductAdmin) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "This user has already a product");
         }
 
@@ -76,8 +74,7 @@ public class ProductService {
         userProduct.setProduct(product);
         userProduct.setUser(user);
         userProduct.setRole(Role.ADMIN);
-        user.getUserProducts().add(userProduct);
-        userRepository.save(user);
+        userProductRepository.save(userProduct);
 
         CreateProductResponse response = new CreateProductResponse(product.getId());
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -91,7 +88,7 @@ public class ProductService {
     public ResponseEntity<ViewProductResponse> view(@PathVariable Long productId) {
         Product product = productRepository.findProductById(productId);
         if (product == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product with this id not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There is no product with this id");
         }
 
         ViewProductResponse viewProductResponse = new ViewProductResponse(
@@ -122,7 +119,7 @@ public class ProductService {
     ) {
         Product product = productRepository.findProductById(productId);
         if (product == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product with this id not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There is no product with this id");
         }
 
         if (!request.version().equals(product.getVersion())) {
@@ -145,14 +142,13 @@ public class ProductService {
     @Transactional
     @DeleteMapping(value = {"/{" + PRODUCT_ID_PATH_VARIABLE_NAME + "}"})
     @CheckRole(role = Role.ADMIN)
-    public ResponseEntity<Void> delete(@PathVariable long productId) {
-        Product product = productRepository.findProductById(productId);
-        if (product == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product with this id not found");
+    public ResponseEntity<Void> delete(@PathVariable Long productId) {
+        if (!productRepository.existsById(productId)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There is no product with this id");
         }
 
-        productRepository.deleteById(productId);
         userProductRepository.deleteAllByProductId(productId);
+        productRepository.deleteById(productId);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
