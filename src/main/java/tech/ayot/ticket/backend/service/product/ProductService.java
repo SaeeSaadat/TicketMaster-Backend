@@ -107,12 +107,12 @@ public class ProductService {
      * @param request   The update request
      */
     @Transactional
+    @CheckRole(role = Role.ADMIN)
     @PutMapping(
         value = {"/{" + PRODUCT_ID_PATH_VARIABLE_NAME + "}"},
         consumes = {"application/json"},
         produces = {"application/json"}
     )
-    @CheckRole(role = Role.ADMIN)
     public ResponseEntity<Long> update(
         @PathVariable Long productId,
         @RequestBody @Valid UpdateProductRequest request
@@ -140,8 +140,8 @@ public class ProductService {
      * @param productId The product's I
      */
     @Transactional
-    @DeleteMapping(value = {"/{" + PRODUCT_ID_PATH_VARIABLE_NAME + "}"})
     @CheckRole(role = Role.ADMIN)
+    @DeleteMapping(value = {"/{" + PRODUCT_ID_PATH_VARIABLE_NAME + "}"})
     public ResponseEntity<Void> delete(@PathVariable Long productId) {
         if (!productRepository.existsById(productId)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There is no product with this id");
