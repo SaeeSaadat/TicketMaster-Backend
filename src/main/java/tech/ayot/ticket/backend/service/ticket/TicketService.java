@@ -18,6 +18,7 @@ import tech.ayot.ticket.backend.dto.ticket.request.CreateTicketRequest;
 import tech.ayot.ticket.backend.dto.ticket.request.ListTicketRequest;
 import tech.ayot.ticket.backend.dto.ticket.request.UpdateTicketRequest;
 import tech.ayot.ticket.backend.dto.ticket.response.ListTicketResponse;
+import tech.ayot.ticket.backend.dto.ticket.response.ListUserTicketsProductsResponse;
 import tech.ayot.ticket.backend.dto.ticket.response.ViewTicketResponse;
 import tech.ayot.ticket.backend.model.enumuration.Role;
 import tech.ayot.ticket.backend.model.enumuration.TicketStatus;
@@ -30,6 +31,7 @@ import tech.ayot.ticket.backend.repository.ticket.MessageRepository;
 import tech.ayot.ticket.backend.repository.ticket.TicketRepository;
 import tech.ayot.ticket.backend.service.auth.AuthenticationService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static tech.ayot.ticket.backend.configuration.WebMvcConfiguration.PRODUCT_ID_PATH_VARIABLE_NAME;
@@ -181,6 +183,23 @@ public class TicketService {
         ticketRepository.save(ticket);
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping(
+        value = {"tickets/products"},
+        produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
+    public ResponseEntity<ListUserTicketsProductsResponse> listUserTicketsProducts() {
+        User user = authenticationService.getCurrentUser();
+
+        List<Ticket> tickets = ticketRepository.findTicketsByCreatedBy(user);
+        List<String> productNames = new ArrayList<>();
+        for (Ticket ticket: tickets) {
+            productNames.add(ticket.getTitle());
+        }
+
+        ListUserTicketsProductsResponse response = new ListUserTicketsProductsResponse(productNames);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 

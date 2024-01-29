@@ -8,13 +8,17 @@ import org.springframework.stereotype.Repository;
 import tech.ayot.ticket.backend.model.enumuration.TicketStatus;
 import tech.ayot.ticket.backend.model.enumuration.TicketType;
 import tech.ayot.ticket.backend.model.ticket.Ticket;
+import tech.ayot.ticket.backend.model.user.User;
 
 import java.util.Date;
+import java.util.List;
 
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     Ticket findTicketById(Long id);
+
+    List<Ticket> findTicketsByCreatedBy(User user);
 
     @Query(
         "select t from Ticket t " +
