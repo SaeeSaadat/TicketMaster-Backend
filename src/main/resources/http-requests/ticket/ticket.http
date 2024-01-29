@@ -32,7 +32,7 @@ Content-Type: application/json
   "type": "BUG",
   "productName": "test",
   "createdAfter": "2020-01-01",
-  "createdBefore": "2024-01-01",
+  "createdBefore": "2025-01-01",
   "status": "OPEN"
 }
 

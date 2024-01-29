@@ -209,6 +209,8 @@ public class TicketService {
             userId,
             request.type(),
             productName,
+            request.createdAfter(),
+            request.createdBefore(),
             request.status(),
             pageRequest
         );
