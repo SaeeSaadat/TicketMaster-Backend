@@ -16,7 +16,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     @Query(
         "select t from Ticket t " +
-            "where t.createdBy.id = :userId " +
+            "where (:userId is null or t.createdBy.id = :userId) " +
             "and (:type is null or t.type = :type) " +
             "and (:productName is null or t.product.name = :productName) " +
             "and (:status is null or t.status = :status)"

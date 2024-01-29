@@ -11,12 +11,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import tech.ayot.ticket.backend.annotation.CheckRole;
 import tech.ayot.ticket.backend.dto.ticket.MessageDto;
 import tech.ayot.ticket.backend.dto.ticket.TicketDto;
 import tech.ayot.ticket.backend.dto.ticket.request.CreateTicketRequest;
 import tech.ayot.ticket.backend.dto.ticket.request.ListTicketRequest;
+import tech.ayot.ticket.backend.dto.ticket.request.UpdateTicketRequest;
 import tech.ayot.ticket.backend.dto.ticket.response.ListTicketResponse;
 import tech.ayot.ticket.backend.dto.ticket.response.ViewTicketResponse;
+import tech.ayot.ticket.backend.model.enumuration.Role;
 import tech.ayot.ticket.backend.model.enumuration.TicketStatus;
 import tech.ayot.ticket.backend.model.product.Product;
 import tech.ayot.ticket.backend.model.ticket.Message;
@@ -129,6 +132,66 @@ public class TicketService {
         @Valid @RequestBody ListTicketRequest request
     ) {
         User user = authenticationService.getCurrentUser();
+        ListTicketResponse response = listTickets(request, request.productName(), user.getId());
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @CheckRole(role = Role.ADMIN)
+    @GetMapping(
+        value = {"/product/{" + PRODUCT_ID_PATH_VARIABLE_NAME + "}/ticket"},
+        consumes = {MediaType.APPLICATION_JSON_VALUE},
+        produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
+    public ResponseEntity<ListTicketResponse> listAdmin(
+        @PathVariable Long productId,
+        @Valid @RequestBody ListTicketRequest request
+    ) {
+        Product product = productRepository.findProductById(productId);
+        if (product == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found!");
+        }
+
+        ListTicketResponse response = listTickets(request, product.getName(), null);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @CheckRole(role = Role.ADMIN)
+    @PutMapping(
+        value = {"/product/{" + PRODUCT_ID_PATH_VARIABLE_NAME + "}/ticket/{id}"},
+        consumes = {MediaType.APPLICATION_JSON_VALUE},
+        produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
+    public ResponseEntity<ListTicketResponse> update(
+        @PathVariable Long productId,
+        @PathVariable Long id,
+        @Valid @RequestBody UpdateTicketRequest request
+    ) {
+        Product product = productRepository.findProductById(productId);
+        if (product == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found!");
+        }
+
+        Ticket ticket = ticketRepository.findTicketById(id);
+        if (ticket == null || !ticket.getProduct().getId().equals(productId)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ticket not found!");
+        }
+
+        if (ticket.getStatus() == TicketStatus.CLOSED) {
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Ticket is closed!");
+        }
+
+        ticket.setStatus(request.status());
+        ticketRepository.save(ticket);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+    private ListTicketResponse listTickets(
+        ListTicketRequest request,
+        String productName,
+        Long userId
+    ) {
         Pageable pageRequest;
         if (request.order() == null) {
             pageRequest = PageRequest.of(
@@ -143,17 +206,17 @@ public class TicketService {
             );
         }
         Page<Ticket> tickets = ticketRepository.listAllByUser(
-            user.getId(),
+            userId,
             request.type(),
-            request.productName(),
+            productName,
             request.status(),
             pageRequest
         );
 
-        ListTicketResponse response = new ListTicketResponse(
+        return new ListTicketResponse(
             tickets.getTotalPages(),
             tickets.getNumber(),
-            tickets.getSize(),
+            tickets.getNumberOfElements(),
             tickets.getContent().stream().map(ticket -> new TicketDto(
                 ticket.getType(),
                 ticket.getTitle(),
@@ -164,7 +227,5 @@ public class TicketService {
                 ticket.getProduct().getName()
             )).toList()
         );
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

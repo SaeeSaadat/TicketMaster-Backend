@@ -35,3 +35,27 @@ Content-Type: application/json
   "createdBefore": "2024-01-01",
   "status": "OPEN"
 }
+
+### list admin tickets
+GET {{host}}/api/product/1/ticket
+Content-Type: application/json
+
+{
+  "page": 0,
+  "pageSize": 10,
+  "order": "id",
+  "direction": "ASC",
+  "type": "BUG",
+  "productName": "test",
+  "createdAfter": "2020-01-01",
+  "createdBefore": "2024-01-01",
+  "status": "OPEN"
+}
+
+### update ticket
+PUT {{host}}/api/product/1/ticket/4
+Content-Type: application/json
+
+{
+  "status": "OPEN"
+}
