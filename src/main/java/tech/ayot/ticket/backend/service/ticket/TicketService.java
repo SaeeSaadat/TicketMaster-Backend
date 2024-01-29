@@ -39,11 +39,8 @@ import static tech.ayot.ticket.backend.configuration.WebMvcConfiguration.PRODUCT
 public class TicketService {
 
     private final AuthenticationService authenticationService;
-
     private final ProductRepository productRepository;
-
     private final TicketRepository ticketRepository;
-
     private final MessageRepository messageRepository;
 
     public TicketService(
@@ -161,7 +158,7 @@ public class TicketService {
         consumes = {MediaType.APPLICATION_JSON_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE}
     )
-    public ResponseEntity<ListTicketResponse> update(
+    public ResponseEntity<Void> update(
         @PathVariable Long productId,
         @PathVariable Long id,
         @Valid @RequestBody UpdateTicketRequest request
