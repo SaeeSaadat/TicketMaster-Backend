@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.server.ResponseStatusException;
 import tech.ayot.ticket.backend.BackendApplication;
-import tech.ayot.ticket.backend.dto.auth.enumuration.Role;
+import tech.ayot.ticket.backend.model.enumuration.Role;
 import tech.ayot.ticket.backend.dto.product.request.CreateProductRequest;
 import tech.ayot.ticket.backend.dto.product.request.UpdateProductRequest;
 import tech.ayot.ticket.backend.dto.product.response.CreateProductResponse;

@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import tech.ayot.ticket.backend.annotation.CheckRole;
-import tech.ayot.ticket.backend.dto.auth.enumuration.Role;
+import tech.ayot.ticket.backend.model.enumuration.Role;
 import tech.ayot.ticket.backend.dto.product.request.CreateProductRequest;
 import tech.ayot.ticket.backend.dto.product.request.UpdateProductRequest;
 import tech.ayot.ticket.backend.dto.product.response.CreateProductResponse;

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import tech.ayot.ticket.backend.dto.auth.enumuration.Role;
+import tech.ayot.ticket.backend.model.enumuration.Role;
 import tech.ayot.ticket.backend.dto.product.request.CreateProductRequest;
 import tech.ayot.ticket.backend.dto.product.request.UpdateProductRequest;
 import tech.ayot.ticket.backend.dto.product.response.CreateProductResponse;

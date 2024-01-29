@@ -1,7 +1,7 @@
 package tech.ayot.ticket.backend.model.user;
 
 import jakarta.persistence.*;
-import tech.ayot.ticket.backend.dto.auth.enumuration.Role;
+import tech.ayot.ticket.backend.model.enumuration.Role;
 import tech.ayot.ticket.backend.model.BaseModel;
 import tech.ayot.ticket.backend.model.product.Product;
 
@@ -15,7 +15,7 @@ public class UserProduct extends BaseModel {
     /**
      * The user
      */
-    @ManyToOne
+    @ManyToOne(optional = false)
     private User user;
 
     /**

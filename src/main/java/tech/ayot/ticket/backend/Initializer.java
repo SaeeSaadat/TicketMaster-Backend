@@ -6,7 +6,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
-import tech.ayot.ticket.backend.dto.auth.enumuration.Role;
+import tech.ayot.ticket.backend.model.enumuration.Role;
 import tech.ayot.ticket.backend.model.user.User;
 import tech.ayot.ticket.backend.model.user.UserProduct;
 import tech.ayot.ticket.backend.repository.user.UserRepository;

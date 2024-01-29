@@ -1,0 +1,37 @@
+### login
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "AdminP@33"
+}
+
+### create ticket
+POST {{host}}/api/product/1/ticket
+Content-Type: application/json
+
+{
+  "title": "ticket-3",
+  "type": "BUG",
+  "description": "this is a bug"
+}
+
+### view ticket
+GET {{host}}/api/product/1/ticket/6
+
+### list tickets
+GET {{host}}/api/ticket
+Content-Type: application/json
+
+{
+  "page": 0,
+  "pageSize": 10,
+  "order": "id",
+  "direction": "ASC",
+  "type": "BUG",
+  "productName": "test",
+  "createdAfter": "2020-01-01",
+  "createdBefore": "2024-01-01",
+  "status": "OPEN"
+}

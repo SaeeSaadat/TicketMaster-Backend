@@ -2,15 +2,22 @@ package tech.ayot.ticket.backend.model.ticket;
 
 import jakarta.persistence.*;
 import tech.ayot.ticket.backend.model.BaseModel;
+import tech.ayot.ticket.backend.model.enumuration.TicketStatus;
+import tech.ayot.ticket.backend.model.enumuration.TicketType;
 import tech.ayot.ticket.backend.model.product.Product;
-import tech.ayot.ticket.backend.model.user.User;
 
 import java.util.Date;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "tickets")
-public abstract class Ticket extends BaseModel {
+public class Ticket extends BaseModel {
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 16)
+    private TicketType type;
+
+    @ManyToOne(optional = false)
+    private Product product;
 
     @Column(length = 64, nullable = false)
     private String title;
@@ -21,11 +28,26 @@ public abstract class Ticket extends BaseModel {
     @Column
     private Date deadline;
 
-    @ManyToOne
-    private Product product;
+    @Enumerated(EnumType.STRING)
+    @Column(length = 32)
+    private TicketStatus status;
 
-    @ManyToOne
-    private User user;
+
+    public TicketType getType() {
+        return type;
+    }
+
+    public void setType(TicketType type) {
+        this.type = type;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 
     public String getTitle() {
         return title;
@@ -51,19 +73,11 @@ public abstract class Ticket extends BaseModel {
         this.deadline = deadline;
     }
 
-    public Product getProduct() {
-        return product;
+    public TicketStatus getStatus() {
+        return status;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
+    public void setStatus(TicketStatus status) {
+        this.status = status;
     }
 }

@@ -1,6 +1,6 @@
 package tech.ayot.ticket.backend.dto.auth.response;
 
-import tech.ayot.ticket.backend.dto.auth.enumuration.Role;
+import tech.ayot.ticket.backend.model.enumuration.Role;
 
 /**
  * Response body of login and user request.

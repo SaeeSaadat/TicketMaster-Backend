@@ -1,4 +1,4 @@
-package tech.ayot.ticket.backend.dto.auth.enumuration;
+package tech.ayot.ticket.backend.model.enumuration;
 
 /**
  * Represents user roles

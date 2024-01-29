@@ -8,7 +8,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import tech.ayot.ticket.backend.BackendApplication;
 import tech.ayot.ticket.backend.dto.auth.UserDto;
-import tech.ayot.ticket.backend.dto.auth.enumuration.Role;
+import tech.ayot.ticket.backend.model.enumuration.Role;
 import tech.ayot.ticket.backend.model.product.Product;
 import tech.ayot.ticket.backend.model.user.User;
 import tech.ayot.ticket.backend.model.user.UserProduct;

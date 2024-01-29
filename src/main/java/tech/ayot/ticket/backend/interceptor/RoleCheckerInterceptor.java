@@ -10,7 +10,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.HandlerMapping;
 import tech.ayot.ticket.backend.annotation.CheckRole;
 import tech.ayot.ticket.backend.configuration.WebMvcConfiguration;
-import tech.ayot.ticket.backend.dto.auth.enumuration.Role;
+import tech.ayot.ticket.backend.model.enumuration.Role;
 import tech.ayot.ticket.backend.service.auth.RoleService;
 
 import java.lang.reflect.Method;

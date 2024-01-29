@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import tech.ayot.ticket.backend.dto.auth.GrantedRoleDto;
 import tech.ayot.ticket.backend.dto.auth.UserDto;
-import tech.ayot.ticket.backend.dto.auth.enumuration.Role;
+import tech.ayot.ticket.backend.model.enumuration.Role;
 import tech.ayot.ticket.backend.dto.auth.request.LoginRequest;
 import tech.ayot.ticket.backend.dto.auth.request.RegisterRequest;
 import tech.ayot.ticket.backend.dto.auth.response.LoginResponse;
