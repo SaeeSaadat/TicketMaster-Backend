@@ -8,6 +8,4 @@ import jakarta.persistence.Table;
 @Table(name = "bug_tickets")
 public class BugTicket extends Ticket{
 
-    @Column
-    private String report;
 }
