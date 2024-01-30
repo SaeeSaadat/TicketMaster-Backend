@@ -126,7 +126,6 @@ public class TicketService {
 
     @GetMapping(
         value = {"/ticket"},
-        consumes = {MediaType.APPLICATION_JSON_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE}
     )
     public ResponseEntity<ListTicketResponse> list(
@@ -140,7 +139,6 @@ public class TicketService {
     @CheckRole(role = Role.ADMIN)
     @GetMapping(
         value = {"/product/{" + PRODUCT_ID_PATH_VARIABLE_NAME + "}/ticket"},
-        consumes = {MediaType.APPLICATION_JSON_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE}
     )
     public ResponseEntity<ListTicketResponse> listAdmin(
