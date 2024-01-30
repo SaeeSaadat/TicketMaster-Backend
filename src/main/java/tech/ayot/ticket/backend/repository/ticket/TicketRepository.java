@@ -20,6 +20,8 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     List<Ticket> findTicketsByCreatedBy(User user);
 
+    Boolean existsByProductId(Long productId);
+
     @Query(
         "select t from Ticket t " +
             "where (:userId is null or t.createdBy.id = :userId) " +

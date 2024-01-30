@@ -16,6 +16,7 @@ import tech.ayot.ticket.backend.model.product.Product;
 import tech.ayot.ticket.backend.model.user.User;
 import tech.ayot.ticket.backend.model.user.UserProduct;
 import tech.ayot.ticket.backend.repository.product.ProductRepository;
+import tech.ayot.ticket.backend.repository.ticket.TicketRepository;
 import tech.ayot.ticket.backend.repository.user.UserProductRepository;
 import tech.ayot.ticket.backend.service.auth.AuthenticationService;
 
@@ -31,14 +32,18 @@ public class ProductService {
 
     private final UserProductRepository userProductRepository;
 
+    private final TicketRepository ticketRepository;
+
     public ProductService(
         AuthenticationService authenticationService,
         ProductRepository productRepository,
-        UserProductRepository userProductRepository
+        UserProductRepository userProductRepository,
+        TicketRepository ticketRepository
     ) {
         this.authenticationService = authenticationService;
         this.productRepository = productRepository;
         this.userProductRepository = userProductRepository;
+        this.ticketRepository = ticketRepository;
     }
 
 
@@ -110,8 +115,7 @@ public class ProductService {
     @CheckRole(role = Role.ADMIN)
     @PutMapping(
         value = {"/{" + PRODUCT_ID_PATH_VARIABLE_NAME + "}"},
-        consumes = {"application/json"},
-        produces = {"application/json"}
+        consumes = {"application/json"}
     )
     public ResponseEntity<Long> update(
         @PathVariable Long productId,
@@ -145,6 +149,9 @@ public class ProductService {
     public ResponseEntity<Void> delete(@PathVariable Long productId) {
         if (!productRepository.existsById(productId)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There is no product with this id");
+        }
+        if (ticketRepository.existsByProductId(productId)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Cannot delete a product which has a ticket");
         }
 
         userProductRepository.deleteAllByProductId(productId);
