@@ -5,12 +5,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import tech.ayot.ticket.backend.model.enumuration.Role;
 import tech.ayot.ticket.backend.dto.product.request.CreateProductRequest;
 import tech.ayot.ticket.backend.dto.product.request.UpdateProductRequest;
 import tech.ayot.ticket.backend.dto.product.response.CreateProductResponse;
 import tech.ayot.ticket.backend.dto.product.response.ViewProductResponse;
 import tech.ayot.ticket.backend.integration.BaseIntegrationTest;
+import tech.ayot.ticket.backend.model.enumuration.Role;
 import tech.ayot.ticket.backend.model.product.Product;
 import tech.ayot.ticket.backend.model.user.User;
 import tech.ayot.ticket.backend.model.user.UserProduct;
@@ -19,7 +19,6 @@ import tech.ayot.ticket.backend.repository.user.UserProductRepository;
 import tech.ayot.ticket.backend.repository.user.UserRepository;
 
 import java.util.List;
-import java.util.UUID;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -56,7 +55,7 @@ public class ProductServiceIntegrationTest extends BaseIntegrationTest {
         CreateProductRequest request = new CreateProductRequest(
             "name",
             "description",
-            UUID.randomUUID()
+            "image"
         );
 
         // Act
@@ -97,7 +96,7 @@ public class ProductServiceIntegrationTest extends BaseIntegrationTest {
         CreateProductRequest request = new CreateProductRequest(
             "name",
             "description",
-            UUID.randomUUID()
+            "image"
         );
 
         // Act & Assert
@@ -129,7 +128,7 @@ public class ProductServiceIntegrationTest extends BaseIntegrationTest {
         CreateProductRequest request = new CreateProductRequest(
             "name",
             "description",
-            UUID.randomUUID()
+            "image"
         );
 
         // Act & Assert
@@ -185,14 +184,14 @@ public class ProductServiceIntegrationTest extends BaseIntegrationTest {
         Product product = new Product();
         product.setName("name");
         product.setDescription("description");
-        product.setImageId(UUID.randomUUID());
+        product.setImageId("image");
         product = productRepository.save(product);
 
         // Create request
         UpdateProductRequest request = new UpdateProductRequest(
             product.getVersion(),
             "new-description",
-            UUID.randomUUID()
+            "image"
         );
 
         // Act
@@ -216,7 +215,7 @@ public class ProductServiceIntegrationTest extends BaseIntegrationTest {
         UpdateProductRequest request = new UpdateProductRequest(
             0L,
             "new-description",
-            UUID.randomUUID()
+            "image"
         );
 
         // Act & Assert
@@ -240,7 +239,7 @@ public class ProductServiceIntegrationTest extends BaseIntegrationTest {
         UpdateProductRequest request = new UpdateProductRequest(
             product.getVersion() - 1,
             "new-description",
-            UUID.randomUUID()
+            "image"
         );
 
         // Act & Assert
@@ -259,7 +258,7 @@ public class ProductServiceIntegrationTest extends BaseIntegrationTest {
         Product product = new Product();
         product.setName("name");
         product.setDescription("description");
-        product.setImageId(UUID.randomUUID());
+        product.setImageId("image");
         product = productRepository.save(product);
 
         // Create user product

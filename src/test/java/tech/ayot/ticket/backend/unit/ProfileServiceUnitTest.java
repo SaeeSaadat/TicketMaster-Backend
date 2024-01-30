@@ -17,8 +17,6 @@ import tech.ayot.ticket.backend.repository.user.UserRepository;
 import tech.ayot.ticket.backend.service.auth.AuthenticationService;
 import tech.ayot.ticket.backend.service.user.ProfileService;
 
-import java.util.UUID;
-
 import static org.mockito.Mockito.*;
 
 @SpringBootTest(classes = {BackendApplication.class})
@@ -54,7 +52,7 @@ public class ProfileServiceUnitTest extends BaseUnitTest {
         user.setUsername("username");
         user.setFirstName("firstName");
         user.setLastName("lastName");
-        user.setProfilePicture(UUID.randomUUID());
+        user.setProfilePicture("image");
 
         // Mock authentication
         when(authenticationService.getCurrentUser()).thenReturn(user);
@@ -81,7 +79,7 @@ public class ProfileServiceUnitTest extends BaseUnitTest {
         user.setUsername("username");
         user.setFirstName("firstName");
         user.setLastName("lastName");
-        user.setProfilePicture(UUID.randomUUID());
+        user.setProfilePicture("image");
 
         // Mock authentication
         when(authenticationService.getCurrentUser()).thenReturn(user);
@@ -91,7 +89,7 @@ public class ProfileServiceUnitTest extends BaseUnitTest {
             user.getVersion(),
             "updated-firstName",
             "updated-lastName",
-            UUID.randomUUID(),
+            "image",
             "password",
             "updated-password",
             "updated-password"
@@ -123,7 +121,7 @@ public class ProfileServiceUnitTest extends BaseUnitTest {
         user.setUsername("username");
         user.setFirstName("firstName");
         user.setLastName("lastName");
-        user.setProfilePicture(UUID.randomUUID());
+        user.setProfilePicture("image");
 
         // Mock authentication
         when(authenticationService.getCurrentUser()).thenReturn(user);
@@ -156,7 +154,7 @@ public class ProfileServiceUnitTest extends BaseUnitTest {
         user.setUsername("username");
         user.setFirstName("firstName");
         user.setLastName("lastName");
-        user.setProfilePicture(UUID.randomUUID());
+        user.setProfilePicture("image");
 
         // Mock authentication
         when(authenticationService.getCurrentUser()).thenReturn(user);
@@ -190,7 +188,7 @@ public class ProfileServiceUnitTest extends BaseUnitTest {
         user.setUsername("username");
         user.setFirstName("firstName");
         user.setLastName("lastName");
-        user.setProfilePicture(UUID.randomUUID());
+        user.setProfilePicture("image");
 
         // Mock authentication
         when(authenticationService.getCurrentUser()).thenReturn(user);

@@ -1,7 +1,5 @@
 package tech.ayot.ticket.backend.dto.user.response;
 
-import java.util.UUID;
-
 /**
  * Response body of view profile request.
  *
@@ -13,6 +11,6 @@ public record ViewProfileResponse(
     String username,
     String firstName,
     String lastName,
-    UUID profilePicture
+    String profilePicture
 ) {
 }

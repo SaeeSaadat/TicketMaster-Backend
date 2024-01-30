@@ -6,7 +6,6 @@ import tech.ayot.ticket.backend.model.BaseModel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Represents an entity for a user
@@ -56,7 +55,7 @@ public class User extends BaseModel {
      * The user's profile picture
      */
     @Column
-    private UUID profilePicture;
+    private String profilePicture;
 
 
 
@@ -100,11 +99,11 @@ public class User extends BaseModel {
         this.lastName = lastName;
     }
 
-    public UUID getProfilePicture() {
+    public String getProfilePicture() {
         return profilePicture;
     }
 
-    public void setProfilePicture(UUID profilePicture) {
+    public void setProfilePicture(String profilePicture) {
         this.profilePicture = profilePicture;
     }
 }

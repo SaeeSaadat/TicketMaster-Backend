@@ -10,11 +10,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.server.ResponseStatusException;
 import tech.ayot.ticket.backend.BackendApplication;
-import tech.ayot.ticket.backend.model.enumuration.Role;
 import tech.ayot.ticket.backend.dto.product.request.CreateProductRequest;
 import tech.ayot.ticket.backend.dto.product.request.UpdateProductRequest;
 import tech.ayot.ticket.backend.dto.product.response.CreateProductResponse;
 import tech.ayot.ticket.backend.dto.product.response.ViewProductResponse;
+import tech.ayot.ticket.backend.model.enumuration.Role;
 import tech.ayot.ticket.backend.model.product.Product;
 import tech.ayot.ticket.backend.model.user.User;
 import tech.ayot.ticket.backend.model.user.UserProduct;
@@ -25,7 +25,6 @@ import tech.ayot.ticket.backend.service.product.ProductService;
 import tech.ayot.ticket.backend.unit.BaseUnitTest;
 
 import java.util.List;
-import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -63,7 +62,7 @@ public class ProductServiceUnitTest extends BaseUnitTest {
         CreateProductRequest request = new CreateProductRequest(
             "name",
             "description",
-            UUID.randomUUID()
+            "image"
         );
 
         // Mock authentication
@@ -108,7 +107,7 @@ public class ProductServiceUnitTest extends BaseUnitTest {
         CreateProductRequest request = new CreateProductRequest(
             "name",
             "description",
-            UUID.randomUUID()
+            "image"
         );
 
         // Mock product repository
@@ -129,7 +128,7 @@ public class ProductServiceUnitTest extends BaseUnitTest {
         CreateProductRequest request = new CreateProductRequest(
             "name",
             "description",
-            UUID.randomUUID()
+            "image"
         );
 
         // Mock authentication
@@ -161,7 +160,7 @@ public class ProductServiceUnitTest extends BaseUnitTest {
         product.setId(1L);
         product.setName("name");
         product.setDescription("description");
-        product.setImageId(UUID.randomUUID());
+        product.setImageId("image");
 
         // Mock product repository
         when(productRepository.findProductById(product.getId())).thenReturn(product);
@@ -200,7 +199,7 @@ public class ProductServiceUnitTest extends BaseUnitTest {
         product.setVersion(0L);
         product.setName("name");
         product.setDescription("description");
-        product.setImageId(UUID.randomUUID());
+        product.setImageId("image");
 
         // Mock product repository
         when(productRepository.findProductById(product.getId())).thenReturn(product);
@@ -209,7 +208,7 @@ public class ProductServiceUnitTest extends BaseUnitTest {
         UpdateProductRequest request = new UpdateProductRequest(
             product.getVersion(),
             "new-description",
-            UUID.randomUUID()
+            "image"
         );
 
         // Act
@@ -233,7 +232,7 @@ public class ProductServiceUnitTest extends BaseUnitTest {
         UpdateProductRequest request = new UpdateProductRequest(
             0L,
             "new-description",
-            UUID.randomUUID()
+            "image"
         );
 
         // Act & Assert
@@ -253,7 +252,7 @@ public class ProductServiceUnitTest extends BaseUnitTest {
         product.setVersion(1L);
         product.setName("name");
         product.setDescription("description");
-        product.setImageId(UUID.randomUUID());
+        product.setImageId("image");
 
         // Mock product repository
         Long productId = 1L;
@@ -263,7 +262,7 @@ public class ProductServiceUnitTest extends BaseUnitTest {
         UpdateProductRequest request = new UpdateProductRequest(
             product.getVersion() - 1,
             "new-description",
-            UUID.randomUUID()
+            "image"
         );
 
         // Act & Assert
