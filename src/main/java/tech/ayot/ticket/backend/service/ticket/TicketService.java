@@ -1,10 +1,12 @@
 package tech.ayot.ticket.backend.service.ticket;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,7 @@ import tech.ayot.ticket.backend.dto.ticket.response.ListUserTicketsProductsRespo
 import tech.ayot.ticket.backend.dto.ticket.response.ViewTicketResponse;
 import tech.ayot.ticket.backend.model.enumuration.Role;
 import tech.ayot.ticket.backend.model.enumuration.TicketStatus;
+import tech.ayot.ticket.backend.model.enumuration.TicketType;
 import tech.ayot.ticket.backend.model.product.Product;
 import tech.ayot.ticket.backend.model.ticket.Message;
 import tech.ayot.ticket.backend.model.ticket.Ticket;
@@ -31,7 +34,9 @@ import tech.ayot.ticket.backend.repository.ticket.MessageRepository;
 import tech.ayot.ticket.backend.repository.ticket.TicketRepository;
 import tech.ayot.ticket.backend.service.auth.AuthenticationService;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static tech.ayot.ticket.backend.configuration.WebMvcConfiguration.PRODUCT_ID_PATH_VARIABLE_NAME;
@@ -126,13 +131,31 @@ public class TicketService {
 
     @GetMapping(
         value = {"/ticket"},
-        consumes = {MediaType.APPLICATION_JSON_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE}
     )
     public ResponseEntity<ListTicketResponse> list(
-        @Valid @RequestBody ListTicketRequest request
+        @RequestParam @NotNull Integer page,
+        @RequestParam(required = false) Integer pageSize,
+        @RequestParam(required = false) String order,
+        @RequestParam(required = false) Sort.Direction direction,
+        @RequestParam(required = false) TicketType type,
+        @RequestParam(required = false) String productName,
+        @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date createdAfter,
+        @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date createdBefore,
+        @RequestParam(required = false) TicketStatus status
     ) {
         User user = authenticationService.getCurrentUser();
+        ListTicketRequest request = new ListTicketRequest(
+            page,
+            pageSize,
+            order,
+            direction,
+            type,
+            productName,
+            createdAfter,
+            createdBefore,
+            status
+        );
         ListTicketResponse response = listTickets(request, request.productName(), user.getId());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -140,18 +163,35 @@ public class TicketService {
     @CheckRole(role = Role.ADMIN)
     @GetMapping(
         value = {"/product/{" + PRODUCT_ID_PATH_VARIABLE_NAME + "}/ticket"},
-        consumes = {MediaType.APPLICATION_JSON_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE}
     )
     public ResponseEntity<ListTicketResponse> listAdmin(
         @PathVariable Long productId,
-        @Valid @RequestBody ListTicketRequest request
+        @RequestParam @NotNull Integer page,
+        @RequestParam(required = false) Integer pageSize,
+        @RequestParam(required = false) String order,
+        @RequestParam(required = false) Sort.Direction direction,
+        @RequestParam(required = false) TicketType type,
+        @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date createdAfter,
+        @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date createdBefore,
+        @RequestParam(required = false) TicketStatus status
     ) {
         Product product = productRepository.findProductById(productId);
         if (product == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found!");
         }
 
+        ListTicketRequest request = new ListTicketRequest(
+            page,
+            pageSize,
+            order,
+            direction,
+            type,
+            null,
+            createdAfter,
+            createdBefore,
+            status
+        );
         ListTicketResponse response = listTickets(request, product.getName(), null);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -223,12 +263,14 @@ public class TicketService {
                 Sort.by(request.direction() == null ? Sort.Direction.ASC : request.direction(), request.order())
             );
         }
+        Date createdAfter = request.createdAfter() == null ? Date.from(Instant.EPOCH) : request.createdAfter();
+        Date createdBefore = request.createdBefore() == null ? Date.from(Instant.now()) : request.createdBefore();
         Page<Ticket> tickets = ticketRepository.listAllByUser(
             userId,
             request.type(),
             productName,
-            request.createdAfter(),
-            request.createdBefore(),
+            createdAfter,
+            createdBefore,
             request.status(),
             pageRequest
         );
