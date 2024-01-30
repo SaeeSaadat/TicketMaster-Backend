@@ -34,6 +34,7 @@ import tech.ayot.ticket.backend.repository.ticket.MessageRepository;
 import tech.ayot.ticket.backend.repository.ticket.TicketRepository;
 import tech.ayot.ticket.backend.service.auth.AuthenticationService;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
@@ -140,8 +141,8 @@ public class TicketService {
         @RequestParam(required = false) Sort.Direction direction,
         @RequestParam(required = false) TicketType type,
         @RequestParam(required = false) String productName,
-        @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date createdAfter,
-        @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date createdBefore,
+        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date createdAfter,
+        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date createdBefore,
         @RequestParam(required = false) TicketStatus status
     ) {
         User user = authenticationService.getCurrentUser();
@@ -172,8 +173,8 @@ public class TicketService {
         @RequestParam(required = false) String order,
         @RequestParam(required = false) Sort.Direction direction,
         @RequestParam(required = false) TicketType type,
-        @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date createdAfter,
-        @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date createdBefore,
+        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date createdAfter,
+        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date createdBefore,
         @RequestParam(required = false) TicketStatus status
     ) {
         Product product = productRepository.findProductById(productId);
@@ -236,7 +237,7 @@ public class TicketService {
 
         List<Ticket> tickets = ticketRepository.findTicketsByCreatedBy(user);
         List<String> productNames = new ArrayList<>();
-        for (Ticket ticket: tickets) {
+        for (Ticket ticket : tickets) {
             productNames.add(ticket.getTitle());
         }
 
@@ -264,7 +265,7 @@ public class TicketService {
             );
         }
         Date createdAfter = request.createdAfter() == null ? Date.from(Instant.EPOCH) : request.createdAfter();
-        Date createdBefore = request.createdBefore() == null ? Date.from(Instant.now()) : request.createdBefore();
+        Date createdBefore = request.createdBefore() == null ? Date.from(Instant.now().plus(Duration.ofDays(365))) : request.createdBefore();
         Page<Ticket> tickets = ticketRepository.listAllByUser(
             userId,
             request.type(),
