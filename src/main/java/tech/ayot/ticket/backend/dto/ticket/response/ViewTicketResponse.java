@@ -12,6 +12,7 @@ import java.util.List;
  */
 public record ViewTicketResponse(
     Long ticketId,
+    String username,
     Date created,
     TicketType type,
     String title,

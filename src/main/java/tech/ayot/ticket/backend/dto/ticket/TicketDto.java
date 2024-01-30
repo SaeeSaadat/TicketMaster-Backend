@@ -7,6 +7,7 @@ import java.util.Date;
 
 public record TicketDto(
     Long ticketId,
+    String username,
     Date created,
     TicketType type,
     String title,

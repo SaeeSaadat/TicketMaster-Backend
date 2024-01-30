@@ -112,6 +112,7 @@ public class TicketService {
 
         ViewTicketResponse response = new ViewTicketResponse(
             ticket.getId(),
+            ticket.getCreatedBy().getUsername(),
             ticket.getCreationDate(),
             ticket.getType(),
             ticket.getTitle(),
@@ -282,6 +283,7 @@ public class TicketService {
             tickets.getNumberOfElements(),
             tickets.getContent().stream().map(ticket -> new TicketDto(
                 ticket.getId(),
+                ticket.getCreatedBy().getUsername(),
                 ticket.getCreationDate(),
                 ticket.getType(),
                 ticket.getTitle(),
