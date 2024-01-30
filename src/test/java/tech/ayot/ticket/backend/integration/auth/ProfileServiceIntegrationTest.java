@@ -50,8 +50,8 @@ public class ProfileServiceIntegrationTest extends BaseIntegrationTest {
         );
 
         MockMvcResponse<ViewProfileResponse> mockMvcResponse = sendRequest(
-            HttpMethod.PUT,
-            "/api/profile",
+            HttpMethod.POST,
+            "/api/profile/update",
             MediaType.APPLICATION_JSON,
             request,
             status().isOk(),
@@ -80,8 +80,8 @@ public class ProfileServiceIntegrationTest extends BaseIntegrationTest {
         );
 
         sendRequest(
-            HttpMethod.PUT,
-            "/api/profile",
+            HttpMethod.POST,
+            "/api/profile/update",
             MediaType.APPLICATION_JSON,
             request,
             status().isNotAcceptable()
@@ -101,8 +101,8 @@ public class ProfileServiceIntegrationTest extends BaseIntegrationTest {
         );
 
         sendRequest(
-            HttpMethod.PUT,
-            "/api/profile",
+            HttpMethod.POST,
+            "/api/profile/update",
             MediaType.APPLICATION_JSON,
             request,
             status().isBadRequest()
@@ -122,8 +122,8 @@ public class ProfileServiceIntegrationTest extends BaseIntegrationTest {
         );
 
         sendRequest(
-            HttpMethod.PUT,
-            "/api/profile",
+            HttpMethod.POST,
+            "/api/profile/update",
             MediaType.APPLICATION_JSON,
             request,
             status().isNotAcceptable()
@@ -143,8 +143,8 @@ public class ProfileServiceIntegrationTest extends BaseIntegrationTest {
         );
 
         sendRequest(
-            HttpMethod.PUT,
-            "/api/profile",
+            HttpMethod.POST,
+            "/api/profile/update",
             MediaType.APPLICATION_JSON,
             request,
             status().isNotAcceptable()

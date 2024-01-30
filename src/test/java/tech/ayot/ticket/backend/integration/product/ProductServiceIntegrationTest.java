@@ -196,8 +196,8 @@ public class ProductServiceIntegrationTest extends BaseIntegrationTest {
 
         // Act
         sendRequest(
-            HttpMethod.PUT,
-            "/api/product/" + product.getId(),
+            HttpMethod.POST,
+            "/api/product/" + product.getId() + "/update",
             MediaType.APPLICATION_JSON,
             request,
             status().isOk()
@@ -220,8 +220,8 @@ public class ProductServiceIntegrationTest extends BaseIntegrationTest {
 
         // Act & Assert
         sendRequest(
-            HttpMethod.PUT,
-            "/api/product/1",
+            HttpMethod.POST,
+            "/api/product/1/update",
             MediaType.APPLICATION_JSON,
             request,
             status().isNotFound()
@@ -244,8 +244,8 @@ public class ProductServiceIntegrationTest extends BaseIntegrationTest {
 
         // Act & Assert
         sendRequest(
-            HttpMethod.PUT,
-            "/api/product/" + product.getId(),
+            HttpMethod.POST,
+            "/api/product/" + product.getId() + "/update",
             MediaType.APPLICATION_JSON,
             request,
             status().isNotAcceptable()
