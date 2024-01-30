@@ -113,6 +113,7 @@ public class TicketService {
         ViewTicketResponse response = new ViewTicketResponse(
             ticket.getId(),
             ticket.getCreatedBy().getUsername(),
+            ticket.getProduct().getId(),
             ticket.getCreationDate(),
             ticket.getType(),
             ticket.getTitle(),

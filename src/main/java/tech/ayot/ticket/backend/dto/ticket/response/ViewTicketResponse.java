@@ -13,6 +13,7 @@ import java.util.List;
 public record ViewTicketResponse(
     Long ticketId,
     String username,
+    Long productId,
     Date created,
     TicketType type,
     String title,
