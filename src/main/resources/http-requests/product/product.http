@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
   "username": "admin",
-  "password": "adminpass"
+  "password": "AdminP@33"
 }
 
 ### create prduct
@@ -12,7 +12,7 @@ POST {{host}}/api/product
 Content-Type: application/json
 
 {
-  "name": "test"
+  "name": "test2"
 }
 
 ### view product
@@ -23,9 +23,9 @@ PUT {{host}}/api/product/2
 Content-Type: application/json
 
 {
-  "version": 0,
+  "version": 1,
   "description": "Hello"
 }
 
 ### delete product
-DELETE {{host}}/api/product/3
+DELETE {{host}}/api/product/1

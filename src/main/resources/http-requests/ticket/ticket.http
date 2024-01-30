@@ -8,54 +8,28 @@ Content-Type: application/json
 }
 
 ### create ticket
-POST {{host}}/api/product/1/ticket
+POST {{host}}/api/product/2/ticket
 Content-Type: application/json
 
 {
-  "title": "ticket-3",
+  "title": "ticket-5",
   "type": "BUG",
   "description": "this is a bug"
 }
 
 ### view ticket
-GET {{host}}/api/product/1/ticket/6
+GET {{host}}/api/product/2/ticket/6
 
 ### list tickets
-GET {{host}}/api/ticket
-Content-Type: application/json
-
-{
-  "page": 0,
-  "pageSize": 10,
-  "order": "id",
-  "direction": "ASC",
-  "type": "BUG",
-  "productName": "test",
-  "createdAfter": "2020-01-01",
-  "createdBefore": "2025-01-01",
-  "status": "OPEN"
-}
+GET {{host}}/api/ticket?page=0
 
 ### list admin tickets
-GET {{host}}/api/product/1/ticket
-Content-Type: application/json
-
-{
-  "page": 0,
-  "pageSize": 10,
-  "order": "id",
-  "direction": "ASC",
-  "type": "BUG",
-  "productName": "test",
-  "createdAfter": "2020-01-01",
-  "createdBefore": "2024-01-01",
-  "status": "OPEN"
-}
+GET {{host}}/api/product/1/ticket?page=0
 
 ### update ticket
-PUT {{host}}/api/product/1/ticket/4
+PUT {{host}}/api/product/2/ticket/3
 Content-Type: application/json
 
 {
-  "status": "OPEN"
+  "status": "PENDING"
 }

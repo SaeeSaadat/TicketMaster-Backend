@@ -1,0 +1,16 @@
+### login
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "AdminP@33"
+}
+
+### create message
+POST {{host}}/api/message/2
+Content-Type: application/json
+
+{
+  "content": "this is a message"
+}
