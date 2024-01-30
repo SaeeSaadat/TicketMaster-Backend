@@ -1,6 +1,8 @@
 package tech.ayot.ticket.backend.configuration;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.lang.NonNull;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -25,8 +27,23 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**").allowedHeaders("*");
-        registry.addMapping("/**").allowedMethods("POST, GET, DELETE, PUT");
-        registry.addMapping("/**").allowedOrigins("*");
+        registry.addMapping("/**")
+            .allowedHeaders("*")
+            .allowedMethods("*")
+            .allowedOrigins("*");
+    }
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(@NonNull CorsRegistry registry) {
+                registry
+                    .addMapping("/**")
+                    .allowedMethods("*")
+                    .allowedOrigins("*")
+                    .allowedHeaders("*");
+            }
+        };
     }
 }
