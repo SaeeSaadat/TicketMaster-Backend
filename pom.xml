@@ -90,6 +90,14 @@
             <version>2.16.0</version>
         </dependency>
 
+        <!-- S3 -->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk</artifactId>
+            <version>1.11.360</version>
+        </dependency>
+
+
         <!-- Test -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>

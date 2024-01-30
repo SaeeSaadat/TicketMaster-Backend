@@ -1,0 +1,17 @@
+### login
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "AdminP@33"
+}
+
+### get pre sign
+POST {{host}}/api/s3/pre-sign
+Content-Type: application/json
+
+{
+  "bucketName": "bucket",
+  "objectName": "file"
+}
