@@ -105,6 +105,8 @@ public class TicketService {
         List<Message> messages = messageRepository.findByTicketId(ticket.getId());
 
         ViewTicketResponse response = new ViewTicketResponse(
+            ticket.getId(),
+            ticket.getCreationDate(),
             ticket.getType(),
             ticket.getTitle(),
             ticket.getDescription(),
@@ -236,6 +238,8 @@ public class TicketService {
             tickets.getNumber(),
             tickets.getNumberOfElements(),
             tickets.getContent().stream().map(ticket -> new TicketDto(
+                ticket.getId(),
+                ticket.getCreationDate(),
                 ticket.getType(),
                 ticket.getTitle(),
                 ticket.getDescription(),

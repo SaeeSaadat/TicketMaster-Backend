@@ -6,6 +6,8 @@ import tech.ayot.ticket.backend.model.enumuration.TicketType;
 import java.util.Date;
 
 public record TicketDto(
+    Long ticketId,
+    Date created,
     TicketType type,
     String title,
     String description,

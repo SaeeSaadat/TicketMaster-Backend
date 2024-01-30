@@ -11,6 +11,8 @@ import java.util.List;
  * Response body of view ticket request.
  */
 public record ViewTicketResponse(
+    Long ticketId,
+    Date created,
     TicketType type,
     String title,
     String description,
