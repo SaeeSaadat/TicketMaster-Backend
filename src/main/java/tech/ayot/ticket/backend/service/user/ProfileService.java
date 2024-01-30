@@ -57,7 +57,7 @@ public class ProfileService {
      * @return New view profile response of current logged-in user
      */
     @Transactional
-    @PutMapping(value = {""}, consumes = {"application/json"}, produces = {"application/json"})
+    @PostMapping(value = {"/update"}, consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<ViewProfileResponse> update(
         @RequestBody @Valid UpdateProfileRequest request
     ) {

@@ -200,8 +200,8 @@ public class TicketService {
     }
 
     @CheckRole(role = Role.ADMIN)
-    @PutMapping(
-        value = {"/product/{" + PRODUCT_ID_PATH_VARIABLE_NAME + "}/ticket/{id}"},
+    @PostMapping(
+        value = {"/product/{" + PRODUCT_ID_PATH_VARIABLE_NAME + "}/ticket/{id}/update"},
         consumes = {MediaType.APPLICATION_JSON_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE}
     )
@@ -231,7 +231,7 @@ public class TicketService {
     }
 
     @GetMapping(
-        value = {"tickets/products"},
+        value = {"/tickets/products"},
         produces = {MediaType.APPLICATION_JSON_VALUE}
     )
     public ResponseEntity<ListUserTicketsProductsResponse> listUserTicketsProducts() {

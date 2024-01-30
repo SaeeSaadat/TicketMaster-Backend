@@ -113,8 +113,8 @@ public class ProductService {
      */
     @Transactional
     @CheckRole(role = Role.ADMIN)
-    @PutMapping(
-        value = {"/{" + PRODUCT_ID_PATH_VARIABLE_NAME + "}"},
+    @PostMapping(
+        value = {"/{" + PRODUCT_ID_PATH_VARIABLE_NAME + "}/update"},
         consumes = {"application/json"}
     )
     public ResponseEntity<Long> update(
